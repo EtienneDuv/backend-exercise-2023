@@ -1,0 +1,51 @@
+{
+  "name": "test-applifting",
+  "version": "1.0.0",
+  "description": "- [Assignment](https://github.com/Applifting/fullstack-exercise/blob/master/assignment.md)\r - [Prototype](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=2%3A3&viewport=148%2C245%2C0.12103988230228424&scaling=min-zoom)\r - [Screens](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-|-Full-Stack-Cvičení)\r - [OpenAPI specification](https://github.com/Applifting/fullstack-exercise/blob/master/api.yml)\r - [JSON schema specification for WebSocket API](https://github.com/Applifting/fullstack-exercise/blob/master/ws.json)\r - [Deployed Backend](https://fullstack.exercise.applifting.cz) `https://fullstack.exercise.applifting.cz`",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts",
+    "start": "node src/app.ts",
+    "start:dev": "nodemon src/app.ts --harmony-top-level-await",
+    "generate:docs": "npx spectaql api.yml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EtienneDuv/test-Applifting.git"
+  },
+  "keywords": [
+    "applifting",
+    "graphql",
+    "express",
+    "test"
+  ],
+  "author": "EtienneDuv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EtienneDuv/test-Applifting/issues"
+  },
+  "homepage": "https://github.com/EtienneDuv/test-Applifting#readme",
+  "dependencies": {
+    "@apollo/server": "^4.3.0",
+    "@types/cors": "^2.8.13",
+    "@types/js-yaml": "^4.0.5",
+    "@types/pg": "^8.6.6",
+    "@types/swagger-ui-express": "^4.1.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "swagger-ui-express": "^4.6.0",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
+    "nodemon": "^2.0.20",
+    "spectaql": "^2.0.3"
+  }
+}

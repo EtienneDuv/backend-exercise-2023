@@ -6,11 +6,8 @@ import {json} from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
-import swaggerUi from 'swagger-ui-express';
 
-import swaggerDocument from '../api-example.json';
-import typeDefs from './typeDefs';
-import resolvers from './resolvers';
+import {typeDefs, resolvers} from './routes';
 
 const main = async () => {
     dotenv.config();

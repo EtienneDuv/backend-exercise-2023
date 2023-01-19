@@ -14,6 +14,7 @@ interface ENV {
   POSTGRES_DB: string|undefined;
   POSTGRES_PORT: number|undefined;
   POSTGRES_LOGGING: boolean|undefined;
+  JWT_SECRET: string|undefined,
 }
 
 interface Config {
@@ -24,6 +25,7 @@ interface Config {
   POSTGRES_DB: string;
   POSTGRES_PORT: number;
   POSTGRES_LOGGING: boolean;
+  JWT_SECRET: string,
 }
 
 // Loading process.env as ENV interface
@@ -36,6 +38,7 @@ const getConfig = (): ENV => {
         POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
         POSTGRES_DB      : process.env.POSTGRES_DB,
         POSTGRES_LOGGING : process.env.POSTGRES_LOGGING === 'true' ? true : false,
+        JWT_SECRET       : process.env.JWT_SECRET,
     };
 };
 

@@ -6,9 +6,10 @@ import {json} from 'body-parser';
 import express from 'express';
 import http from 'http';
 
-import {sequelize, createTables} from './database';
+import {sequelize, createTables, truncateTables} from './database';
 import {typeDefs, resolvers} from './routes';
 import config from './config';
+import {jwtVerify} from './services/jwtService';
 
 const main = async () => {
     const app = express();
@@ -27,13 +28,26 @@ const main = async () => {
         json(),
         express.urlencoded({extended: true}),
         expressMiddleware(server, {
-            context: async ({req}) => ({token: req.headers.token}),
+            // ADDS userId IN CONTEXT IF VALID JWT PROVIDED
+            context: async ({req}) => {
+                if (req.body.operationName === 'IntrospectionQuery') return {};
+                if (!(req.headers && req.headers.authorization)) return {};
+
+                const {0: bearer, 1: token} = req.headers.authorization.split(' ');
+
+                if (!(bearer === 'Bearer')) return {};
+
+                const jwtData = jwtVerify(token);
+
+                return {userId: jwtData.userId};
+            }
         }),
     );
 
     // CHECK POSTGRESQL CONNECTION
     await sequelize.authenticate();
     await createTables();
+    // await truncateTables();
 
     const {APP_PORT} = config;
     await new Promise((resolve) => {

@@ -18,11 +18,18 @@ export const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS
 
 /**
  * Creates tables, dropping it first if it already existed.
- *
  * Used for dev only
- *
  * @return {Promise} -
  */
 export const createTables = async () => {
     return sequelize.sync();
+};
+
+/**
+ * Creates tables, dropping it first if it already existed.
+ * Used for dev only
+ * @return {Promise} -
+ */
+export const truncateTables = async () => {
+    return sequelize.sync({force: true});
 };

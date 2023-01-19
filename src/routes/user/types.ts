@@ -12,6 +12,10 @@ export const userTypes = `#graphql
     # comments: [Comment]!
   }
 
+  type Jwt {
+    token: String!
+  }
+
   input CreateOrLoginUserData {
     username: String!
     password: String!
@@ -22,7 +26,7 @@ export const userTypes = `#graphql
   }
 
   type Mutation {
-    createUser(data: CreateOrLoginUserData): User!
-    login(data: CreateOrLoginUserData): User!
+    createUser(data: CreateOrLoginUserData!): User!
+    login(data: CreateOrLoginUserData!): Jwt!
   }
 `;

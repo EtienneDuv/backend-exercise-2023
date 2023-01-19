@@ -1,7 +1,14 @@
-import {DataTypes} from 'sequelize';
+import {CreationOptional, DataTypes, Model} from 'sequelize';
 import {sequelize} from '../../database';
 
-export const User = sequelize.define('User', {
+export class UserModel extends Model {
+    declare id: string;
+    declare username: string;
+    declare password: string;
+    declare createdAt: CreationOptional<Date>;
+}
+
+UserModel.init({
     id: {
         type        : DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -15,8 +22,10 @@ export const User = sequelize.define('User', {
     password: {
         type     : DataTypes.STRING(255),
         allowNull: false
-    }
+    },
+    createdAt: DataTypes.DATE,
 }, {
+    sequelize,
     freezeTableName: true,
     modelName      : 'user',
     tableName      : 'users',

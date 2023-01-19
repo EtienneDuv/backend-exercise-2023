@@ -1,10 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config';
-
-interface JwtPayload {
-    userId: string;
-    exp: number;
-  }
+import {JwtPayload} from '../interfaces';
 
 export const jwtSign = (userId: string): string => {
     if (userId === undefined) {

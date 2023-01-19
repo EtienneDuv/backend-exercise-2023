@@ -1,11 +1,11 @@
 import {UserModel} from './model';
-
-interface GET_USERS {
-    limit: number | undefined
-}
+import {GetUsers, Context} from '../../interfaces';
+import {rejectUnauthorized} from '../../services/utils';
 
 export const userQueries = {
-    getUsers: (_parent: unknown, args: GET_USERS): Promise<UserModel[]> => {
+    getUsers: (_parent: unknown, args: GetUsers, ctx: object): Promise<UserModel[]> => {
+        rejectUnauthorized(ctx as Context);
+
         let {limit} = args;
         if (!limit || limit > 50) limit = 50;
         return UserModel.findAll({

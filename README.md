@@ -14,7 +14,7 @@
 - ✔ server
 - ✔ basic structure
 - ✔ sequelize + db
-- authentication
+- ✔ authentication
 - type generation codegen https://www.npmjs.com/package/apollo#code-generation
 - dockerize
   - https://stackoverflow.com/questions/34688465/how-do-i-run-a-sql-file-of-inserts-through-docker-run

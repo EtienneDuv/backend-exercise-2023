@@ -28,7 +28,7 @@ const main = async () => {
         json(),
         express.urlencoded({extended: true}),
         expressMiddleware(server, {
-            // ADDS userId IN CONTEXT IF VALID JWT PROVIDED
+            // ADDS userId IN Context IF VALID JWT PROVIDED
             context: async ({req}) => {
                 if (req.body.operationName === 'IntrospectionQuery') return {};
                 if (!(req.headers && req.headers.authorization)) return {};

@@ -1,10 +1,13 @@
 export const userTypes = `#graphql
-  """Represents an user"""
   type User {
-    id: ID!
-    username: String!
-    password: String
-    createdAt: Date!
+    """ UUID identifier """
+    id: ID! 
+    """ Unique name """
+    username: String! 
+    """ User password """
+    password: String 
+    """ Creation date """
+    createdAt: String! 
     # articles: [Article]!
     # comments: [Comment]!
   }
@@ -15,7 +18,7 @@ export const userTypes = `#graphql
   }
 
   type Query {
-    getUsers(limit: Int): [User]!
+    getUsers(limit: Int): [User!]
   }
 
   type Mutation {

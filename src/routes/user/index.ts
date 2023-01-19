@@ -1,4 +1,4 @@
-export {userModel} from './model';
+export {User} from './model';
 export {userMutations} from './mutations';
 export {userQueries} from './queries';
 export {userResolvers} from './resolvers';

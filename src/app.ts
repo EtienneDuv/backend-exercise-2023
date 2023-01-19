@@ -6,13 +6,15 @@ import {json} from 'body-parser';
 import express from 'express';
 import http from 'http';
 
+import {sequelize, createTables} from './database';
 import {typeDefs, resolvers} from './routes';
+import config from './config';
 
 const main = async () => {
     const app = express();
     const httpServer = http.createServer(app);
 
-    // Set up Apollo Server
+    // SET UP APOLLO SERVER
     const server = new ApolloServer({
         typeDefs,
         resolvers,
@@ -29,10 +31,14 @@ const main = async () => {
         }),
     );
 
-    const {port} = process.env;
+    // CHECK POSTGRESQL CONNECTION
+    await sequelize.authenticate();
+    await createTables();
+
+    const {APP_PORT} = config;
     await new Promise((resolve) => {
-        httpServer.listen({port}, resolve);
-        console.log(`Example app listening at http://localhost:${port}`);
+        httpServer.listen({port: APP_PORT}, resolve);
+        console.log(`Example app listening at http://localhost:${APP_PORT}`);
     });
 };
 

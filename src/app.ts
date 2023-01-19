@@ -3,14 +3,12 @@ import {expressMiddleware} from '@apollo/server/express4';
 import {ApolloServerPluginDrainHttpServer} from '@apollo/server/plugin/drainHttpServer';
 import cors from 'cors';
 import {json} from 'body-parser';
-import dotenv from 'dotenv';
 import express from 'express';
 import http from 'http';
 
 import {typeDefs, resolvers} from './routes';
 
 const main = async () => {
-    dotenv.config();
     const app = express();
     const httpServer = http.createServer(app);
 

@@ -1,5 +1,4 @@
 import {userTypes, userMutations, userQueries, userResolvers} from './user';
-import {GraphQLDateTime} from 'graphql-iso-date';
 
 export const typeDefs = `#graphql
      type Query
@@ -16,5 +15,4 @@ export const resolvers = {
         ... userMutations
     },
     User: userResolvers,
-    Date: GraphQLDateTime,
 };

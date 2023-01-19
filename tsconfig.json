@@ -14,5 +14,9 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "outDir": "./build"
-  }
+  },
+  "typeRoots": [
+    "./env.d.ts",
+    "./node_modules/@types"
+  ]
 }

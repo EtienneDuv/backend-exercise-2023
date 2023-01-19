@@ -8,3 +8,16 @@
 - [OpenAPI specification](https://github.com/Applifting/fullstack-exercise/blob/master/api.yml)
 - [JSON schema specification for WebSocket API](https://github.com/Applifting/fullstack-exercise/blob/master/ws.json)
 - [Deployed Backend](https://fullstack.exercise.applifting.cz) `https://fullstack.exercise.applifting.cz`
+
+# TODO
+
+- ✔ server
+- ✔ basic structure
+- sequelize + db
+- dockerize
+- tests
+- new features
+
+# Run app
+
+`docker run --name postgreDb --env-file .env -p 15432:5432 -d postgres`

@@ -1,8 +1,7 @@
 import {hashPassword, verifyPassword} from '../../services/hashService';
 import {jwtSign} from '../../services/jwtService';
 import {UserModel} from './model';
-import {CreateUserOrLogin, Context} from '../../interfaces';
-import {rejectUnauthorized} from '../../services/utils';
+import {CreateUserOrLogin} from '../../interfaces';
 
 export const userMutations = {
     createUser: async (_parent: unknown, args: CreateUserOrLogin, ctx: object): Promise<object> => {

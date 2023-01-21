@@ -6,7 +6,7 @@ dotenv.config();
 // Note these variables can possibly be undefined
 // as someone could skip these variables or not setup a .env file at all
 
-interface ENV {
+interface Env {
   APP_PORT: number|undefined;
   POSTGRES_HOST: string|undefined;
   POSTGRES_USER: string|undefined;
@@ -28,8 +28,8 @@ interface Config {
   JWT_SECRET: string,
 }
 
-// Loading process.env as ENV interface
-const getConfig = (): ENV => {
+// Loading process.env as Env interface
+const getConfig = (): Env => {
     return {
         APP_PORT         : Number(process.env.APP_PORT),
         POSTGRES_PORT    : Number(process.env.POSTGRES_PORT),
@@ -47,7 +47,7 @@ const getConfig = (): ENV => {
 // that these fields are accessible. If all is good return
 // it as Config which just removes the undefined from our type
 // definition.
-const getSanitizedConfig = (config: ENV): Config => {
+const getSanitizedConfig = (config: Env): Config => {
     for (const [key, value] of Object.entries(config)) {
         if (value === undefined) {
             throw new Error(`Missing key ${key} in config.env`);

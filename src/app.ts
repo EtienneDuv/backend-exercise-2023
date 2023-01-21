@@ -7,7 +7,7 @@ import express from 'express';
 import http from 'http';
 
 import {sequelize, createTables, truncateTables} from './database';
-import {typeDefs, resolvers} from './routes';
+import {typeDefs, resolvers} from './api';
 import config from './config';
 import {jwtVerify} from './services/jwtService';
 
@@ -34,10 +34,10 @@ const main = async () => {
                 if (!(req.headers && req.headers.authorization)) return {};
 
                 const {0: bearer, 1: token} = req.headers.authorization.split(' ');
-
                 if (!(bearer === 'Bearer')) return {};
 
                 const jwtData = jwtVerify(token);
+                if (!jwtData) return {};
 
                 return {userId: jwtData.userId};
             }
@@ -50,8 +50,7 @@ const main = async () => {
     // await truncateTables();
 
     const {APP_PORT} = config;
-    await new Promise((resolve) => {
-        httpServer.listen({port: APP_PORT}, resolve);
+    httpServer.listen({port: APP_PORT}, () => {
         console.log(`Example app listening at http://localhost:${APP_PORT}`);
     });
 };

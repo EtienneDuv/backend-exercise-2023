@@ -6,8 +6,6 @@ import {rejectUnauthorized} from '../../services/utils';
 
 export const userMutations = {
     createUser: async (_parent: unknown, args: CreateUserOrLogin, ctx: object): Promise<object> => {
-        rejectUnauthorized(ctx as Context);
-
         const {username, password} = args.data;
         const passwordHash = await hashPassword(password);
         return UserModel.create({

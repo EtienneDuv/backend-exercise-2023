@@ -23,7 +23,12 @@ UserModel.init({
         type     : DataTypes.STRING(255),
         allowNull: false
     },
-    createdAt: DataTypes.DATE,
+    createdAt: {
+        type: DataTypes.DATE,
+        get () {
+            return new Date(this.getDataValue('createdAt')).toISOString();
+        }
+    },
 }, {
     sequelize,
     freezeTableName: true,

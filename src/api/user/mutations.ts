@@ -1,10 +1,10 @@
 import {hashPassword, verifyPassword} from '../../services/hashService';
 import {jwtSign} from '../../services/jwtService';
 import {UserModel} from './model';
-import {CreateUserOrLogin} from '../../interfaces';
+import {MutationCreateUserArgs, MutationLoginArgs, Jwt} from '../../generated/types';
 
 export const userMutations = {
-    createUser: async (_parent: unknown, args: CreateUserOrLogin, ctx: object): Promise<object> => {
+    createUser: async (_parent: unknown, args: MutationCreateUserArgs): Promise<object> => {
         const {username, password} = args.data;
         const passwordHash = await hashPassword(password);
         return UserModel.create({
@@ -12,7 +12,7 @@ export const userMutations = {
             password: passwordHash
         });
     },
-    login: async (_parent: object, args: CreateUserOrLogin): Promise<object> => {
+    login: async (_parent: object, args: MutationLoginArgs): Promise<Jwt> => {
         const {username, password} = args.data;
         const user: UserModel | null = await UserModel.findOne({
             where     : {username},

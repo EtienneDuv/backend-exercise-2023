@@ -15,11 +15,12 @@
 - ✔ basic structure
 - ✔ sequelize + db
 - ✔ authentication
-- type generation codegen https://www.npmjs.com/package/apollo#code-generation
+- ✔ type generation codegen https://www.npmjs.com/package/apollo#code-generation
 - store createdAt as datetime
 - dockerize
   - https://stackoverflow.com/questions/34688465/how-do-i-run-a-sql-file-of-inserts-through-docker-run
 - tests
+- CI/CD
 - new features
 
 # Run app

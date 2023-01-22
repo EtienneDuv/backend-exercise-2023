@@ -1,9 +1,10 @@
 import {UserModel} from './model';
-import {GetUsers, Context} from '../../interfaces';
+import {Context} from '../../interfaces';
+import {QueryGetUsersArgs} from '../../generated/types';
 import {rejectUnauthorized} from '../../services/utils';
 
 export const userQueries = {
-    getUsers: (_parent: unknown, args: GetUsers, ctx: object): Promise<UserModel[]> => {
+    getUsers: (_parent: unknown, args: QueryGetUsersArgs, ctx: object): Promise<UserModel[]> => {
         rejectUnauthorized(ctx as Context);
 
         let {limit} = args;

@@ -2,6 +2,7 @@ import {Sequelize} from 'sequelize';
 import config from '../config';
 
 const {
+    POSTGRES_HOST,
     POSTGRES_DB,
     POSTGRES_USER,
     POSTGRES_PASSWORD,
@@ -10,7 +11,7 @@ const {
 } = config;
 
 export const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, {
-    host   : 'localhost',
+    host   : POSTGRES_HOST,
     dialect: 'postgres',
     port   : POSTGRES_PORT,
     logging: POSTGRES_LOGGING

@@ -28,7 +28,7 @@ const main = async () => {
         json(),
         express.urlencoded({extended: true}),
         expressMiddleware(server, {
-            // ADDS userId IN Context IF VALID JWT PROVIDED
+            // Adds userId in Context if valid jwt provided
             context: async ({req}) => {
                 if (req.body.operationName === 'IntrospectionQuery') return {};
                 if (!(req.headers && req.headers.authorization)) return {};
@@ -49,9 +49,12 @@ const main = async () => {
     await createTables();
     // await truncateTables();
 
-    const {APP_PORT} = config;
+    const {APP_PORT, NODE_ENV} = config;
     httpServer.listen({port: APP_PORT}, () => {
-        console.log(`Example app listening at http://localhost:${APP_PORT}`);
+        const port = NODE_ENV==='dev'
+            ? APP_PORT
+            : '[container\'s bound port]';
+        console.log(`Example app listening at http://localhost:${port}`);
     });
 };
 

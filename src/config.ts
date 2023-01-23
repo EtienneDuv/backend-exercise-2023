@@ -1,6 +1,17 @@
 import dotenv from 'dotenv';
+import {resolve} from 'path';
 
-dotenv.config();
+let envFilePath;
+
+if (process.argv[2]!=='dev') {
+    envFilePath = resolve(__dirname, '..', '.env');
+}
+else {
+    envFilePath = resolve(__dirname, '..', '.env.dev');
+    process.env.NODE_ENV = 'dev';
+}
+
+dotenv.config({path: envFilePath});
 
 // Interface to load env variables
 // Note these variables can possibly be undefined
@@ -15,6 +26,7 @@ interface Env {
   POSTGRES_PORT: number|undefined;
   POSTGRES_LOGGING: boolean|undefined;
   JWT_SECRET: string|undefined,
+  NODE_ENV: string|undefined,
 }
 
 interface Config {
@@ -26,6 +38,7 @@ interface Config {
   POSTGRES_PORT: number;
   POSTGRES_LOGGING: boolean;
   JWT_SECRET: string,
+  NODE_ENV: string,
 }
 
 // Loading process.env as Env interface
@@ -39,6 +52,7 @@ const getConfig = (): Env => {
         POSTGRES_DB      : process.env.POSTGRES_DB,
         POSTGRES_LOGGING : process.env.POSTGRES_LOGGING === 'true' ? true : false,
         JWT_SECRET       : process.env.JWT_SECRET,
+        NODE_ENV         : process.env.NODE_ENV,
     };
 };
 

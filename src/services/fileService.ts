@@ -21,9 +21,9 @@ export const getFilePaths = (path: string): string[] => {
 /**
  * @return {string} All `types.gql` files in api folder concatenated
  */
-export const getGraphqlTypeDefString = (): string => {
-    return getFilePaths('src/api')
+export function getGraphqlTypeDefString (): string {
+    return getFilePaths(resolve(__dirname, '..', 'api'))
         .filter(path => path.endsWith('types.gql'))
         .map(path => readFileSync(path).toString('utf-8'))
         .join('\n\n');
-};
+}

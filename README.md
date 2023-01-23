@@ -16,13 +16,25 @@
 - ✔ sequelize + db
 - ✔ authentication
 - ✔ type generation codegen https://www.npmjs.com/package/apollo#code-generation
-- store createdAt as datetime
 - dockerize
-  - https://stackoverflow.com/questions/34688465/how-do-i-run-a-sql-file-of-inserts-through-docker-run
 - tests
 - CI/CD
 - new features
 
 # Run app
 
-`docker run --name postgreDb --env-file .env -p 15432:5432 -d postgres`
+## Dev environment
+
+**Run postgres container**
+`docker run --name devPostgres --env-file .env.dev -p 5432:5432 -d postgres`
+
+**Run the api**
+`npm run start:dev`
+
+## Prod
+
+- Copy the `.env` file in root folder
+
+`docker-compose up -d`
+
+Access Apollo sandbox at `http://localhost:13000`

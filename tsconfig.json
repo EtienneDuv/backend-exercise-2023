@@ -18,5 +18,8 @@
   "typeRoots": [
     "./env.d.ts",
     "./node_modules/@types"
+  ],
+  "exclude": [
+    "codegen.ts"
   ]
 }

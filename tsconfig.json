@@ -2,6 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Custom Node 16",
   "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "./",
     "lib": [
       "es2021"
     ],
@@ -20,6 +22,7 @@
     "./node_modules/@types"
   ],
   "exclude": [
-    "codegen.ts"
+    "codegen.ts",
+    "./test"
   ]
 }

@@ -3,7 +3,7 @@ import {readdirSync, readFileSync} from 'fs';
 
 /**
  *
- * @param {string} path path fom root folder
+ * @param {string} path - path from root folder
  * @return {string[]} array of paths to files in given path
  */
 export const getFilePaths = (path: string): string[] => {
@@ -22,6 +22,7 @@ export const getFilePaths = (path: string): string[] => {
  * @return {string} All `types.gql` files in api folder concatenated
  */
 export function getGraphqlTypeDefString (): string {
+    // Dynamic path because once built, the path is different than folder structure
     return getFilePaths(resolve(__dirname, '..', 'api'))
         .filter(path => path.endsWith('types.gql'))
         .map(path => readFileSync(path).toString('utf-8'))

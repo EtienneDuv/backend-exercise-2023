@@ -3,12 +3,14 @@ import {resolve} from 'path';
 
 let envFilePath;
 
-if (process.argv[2]!=='dev') {
-    envFilePath = resolve(__dirname, '..', '.env');
-}
-else {
+// NODE_ENV needs to be specified out of env file in dev to load the right file
+// hence the -- dev arg
+if (process.argv.includes('dev')) {
     envFilePath = resolve(__dirname, '..', '.env.dev');
     process.env.NODE_ENV = 'dev';
+}
+else {
+    envFilePath = resolve(__dirname, '..', '.env');
 }
 
 dotenv.config({path: envFilePath});

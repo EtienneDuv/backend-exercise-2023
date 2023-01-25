@@ -17,7 +17,10 @@ UserModel.init({
     username: {
         type     : DataTypes.STRING(255),
         allowNull: false,
-        unique   : true,
+        unique   : {
+            name: 'usernameUnique',
+            msg : 'Username already exists'
+        },
     },
     password: {
         type     : DataTypes.STRING(255),

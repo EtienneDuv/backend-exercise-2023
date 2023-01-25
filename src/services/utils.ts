@@ -5,3 +5,5 @@ export const rejectUnauthorized = (ctx: Context): void => {
         throw new Error('UNAUTHORIZED: No JWT token provided.');
     }
 };
+
+export const randInt = () => Math.floor(Math.random()*10000);

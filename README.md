@@ -15,9 +15,9 @@
 - ✔ basic structure
 - ✔ sequelize + db
 - ✔ authentication
-- ✔ type generation codegen https://www.npmjs.com/package/apollo#code-generation
+- ✔ type generation codegen
 - ✔ dockerize
-- tests
+- ✔ tests
 - CI/CD
 - new features
 

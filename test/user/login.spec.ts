@@ -38,7 +38,7 @@ describe('Login user', () => {
     });
 
 
-    it('should fail to login - User not found', async () => {
+    it('should fail - User not found', async () => {
         const res = await request
             .post('/')
             .send({query: `
@@ -60,7 +60,7 @@ describe('Login user', () => {
     });
 
 
-    it('should fail to login - Password does not match', async () => {
+    it('should fail - Password does not match', async () => {
         const res = await request
             .post('/')
             .send({query: `

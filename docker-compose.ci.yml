@@ -1,0 +1,44 @@
+services:
+
+  db:
+    image: postgres
+    container_name: test-postgres
+    env_file: .env.dev
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d  ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    expose:
+      - "5432"
+
+  api:
+    container_name: test-api
+    restart: always
+    build: . 
+    env_file: .env.dev
+    environment:
+      - POSTGRES_HOST=db
+    links:
+      - db
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "3000"
+
+  runner:
+    container_name: test-runner
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: ./ci/test.Dockerfile
+    env_file: .env.dev
+    environment:
+      - POSTGRES_HOST=db
+      - APP_HOST=api
+    links:
+      - api
+    depends_on:
+      - api

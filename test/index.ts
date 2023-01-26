@@ -2,9 +2,9 @@ import {expect, assert} from 'chai';
 import supertest from 'supertest';
 
 import config from '../src/config';
-import {UserModel} from '../src/api/user/model';
+import {models} from '../src/database';
 
-const url = `http://localhost:${config.APP_PORT}/`;
+const url = `http://${process.env.APP_HOST||'localhost'}:${config.APP_PORT}/`;
 const request = supertest(url);
 
 interface LooseObject {
@@ -16,6 +16,6 @@ export default {
     expect,
     request,
     db: {
-        UserModel
+        ...models()
     },
 } as LooseObject;

@@ -62,7 +62,7 @@ const main = async () => {
     httpServer.listen({port: APP_PORT}, () => {
         const port = NODE_ENV==='dev'
             ? APP_PORT
-            : '[container\'s bound port]';
+            : process.env.CONTAINER_PORT;
         console.log(`Example app listening at http://localhost:${port}`);
     });
 };

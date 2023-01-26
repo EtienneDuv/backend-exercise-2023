@@ -6,7 +6,7 @@ import {json} from 'body-parser';
 import express from 'express';
 import http from 'http';
 
-import {sequelize, createTables, truncateTables} from './database';
+import {sequelize, createTables} from './database';
 import {typeDefs, resolvers} from './api';
 import config from './config';
 import {jwtVerify} from './services/jwtService';
@@ -36,7 +36,16 @@ const main = async () => {
                 const {0: bearer, 1: token} = req.headers.authorization.split(' ');
                 if (!(bearer === 'Bearer')) return {};
 
-                const jwtData = jwtVerify(token);
+                let jwtData;
+                try {
+                    jwtData = jwtVerify(token);
+                } catch (error) {
+                    if (error instanceof Error) {
+                        if (error.name === 'TokenExpiredError') return {};
+                        throw error;
+                    }
+                }
+
                 if (!jwtData) return {};
 
                 return {userId: jwtData.userId};

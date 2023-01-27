@@ -2,7 +2,7 @@ services:
 
   db:
     image: postgres
-    container_name: test-postgres
+    container_name: dev-postgres
     env_file: .env.dev
     restart: always
     healthcheck:
@@ -10,11 +10,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    expose:
-      - "5432"
+    ports:
+      - "15432:5432"
 
   api:
-    container_name: test-api
+    container_name: dev-api
     restart: always
     build: . 
     env_file: .env.dev
@@ -25,20 +25,5 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    expose:
-      - "3000"
-
-  runner:
-    container_name: test-runner
-    restart: on-failure
-    build: 
-      context: .
-      dockerfile: ./ci/test.Dockerfile
-    env_file: .env.dev
-    environment:
-      - POSTGRES_HOST=db
-      - APP_HOST=api
-    links:
-      - api
-    depends_on:
-      - api
+    ports:
+      - "${CONTAINER_PORT}:3000"

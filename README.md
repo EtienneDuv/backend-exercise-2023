@@ -18,8 +18,18 @@
 - ✔ type generation codegen
 - ✔ dockerize
 - ✔ tests
-- CI/CD
-- new features
+- ✔ CI/CD
+- new features:
+  - Article
+    - Create
+    - Read
+    - Update
+    - Delete
+  - Comment
+    - Create
+    - Read
+  - Comment +/-
+  - Nested comments
 
 # Run app
 

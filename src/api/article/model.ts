@@ -1,5 +1,6 @@
 import {CreationOptional, DataTypes} from 'sequelize';
 import {sequelize, CustomModel} from '../../database';
+import {CommentModel} from '../comment';
 
 export class ArticleModel extends CustomModel {
     declare id: CreationOptional<string>;
@@ -16,6 +17,10 @@ ArticleModel.init({
         type        : DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey  : true
+    },
+    authorId: {
+        type        : DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
     },
     title: {
         type     : DataTypes.STRING(255),
@@ -53,5 +58,13 @@ ArticleModel.init({
     timestamps     : true,
     updatedAt      : true,
     underscored    : false,
-    // paranoid       : true,
+    paranoid       : true,
+});
+
+ArticleModel.hasMany(CommentModel, {
+    foreignKey: {
+        name     : 'articleId',
+        allowNull: false
+    },
+    constraints: true,
 });

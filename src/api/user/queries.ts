@@ -9,6 +9,7 @@ export const userQueries = {
 
         let {limit} = args;
         if (!limit || limit > 50) limit = 50;
+
         return UserModel.findAll({
             limit,
             attributes: ['id', 'username', 'createdAt']

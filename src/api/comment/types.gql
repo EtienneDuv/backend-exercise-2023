@@ -1,0 +1,15 @@
+type Comment {
+  id: ID!
+  articleId: ID!
+  authorId: ID!
+  content: String!
+  createdAt: String!
+}
+
+type Query {
+  getComments(limit: Int): [Comment!]
+}
+
+type Mutation {
+  createComment(articleId: String!, content: String!): Comment!
+}

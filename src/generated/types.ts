@@ -28,6 +28,15 @@ export type Article = {
   updatedAt: Scalars['String'];
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  articleId: Scalars['ID'];
+  authorId: Scalars['ID'];
+  content: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+};
+
 export type Jwt = {
   __typename?: 'Jwt';
   token: Scalars['String'];
@@ -36,14 +45,25 @@ export type Jwt = {
 export type Mutation = {
   __typename?: 'Mutation';
   createArticle: Article;
+  createComment: Comment;
   createUser: User;
   deleteArticle?: Maybe<Scalars['Boolean']>;
+  deleteComment?: Maybe<Scalars['Boolean']>;
+  /**  Login with username/password, return JWT token  */
   login: Jwt;
   updateArticle: Article;
+  updateComment: Comment;
 };
 
 
 export type MutationCreateArticleArgs = {
+  content: Scalars['String'];
+  perex: Scalars['String'];
+  title: Scalars['String'];
+};
+
+
+export type MutationCreateCommentArgs = {
   content: Scalars['String'];
   perex: Scalars['String'];
   title: Scalars['String'];
@@ -61,6 +81,11 @@ export type MutationDeleteArticleArgs = {
 };
 
 
+export type MutationDeleteCommentArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type MutationLoginArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
@@ -74,14 +99,28 @@ export type MutationUpdateArticleArgs = {
   title?: InputMaybe<Scalars['String']>;
 };
 
+
+export type MutationUpdateCommentArgs = {
+  content?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  perex?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getArticles?: Maybe<Array<Article>>;
+  getComments?: Maybe<Array<Comment>>;
   getUsers?: Maybe<Array<User>>;
 };
 
 
 export type QueryGetArticlesArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetCommentsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
 };
 
@@ -171,6 +210,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Article: ResolverTypeWrapper<Article>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Comment: ResolverTypeWrapper<Comment>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Jwt: ResolverTypeWrapper<Jwt>;
@@ -184,6 +224,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Article: Article;
   Boolean: Scalars['Boolean'];
+  Comment: Comment;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Jwt: Jwt;
@@ -204,6 +245,15 @@ export type ArticleResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  articleId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  authorId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type JwtResolvers<ContextType = any, ParentType extends ResolversParentTypes['Jwt'] = ResolversParentTypes['Jwt']> = {
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -211,14 +261,18 @@ export type JwtResolvers<ContextType = any, ParentType extends ResolversParentTy
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationCreateArticleArgs, 'content' | 'perex' | 'title'>>;
+  createComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'perex' | 'title'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;
   deleteArticle?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteArticleArgs, 'id'>>;
+  deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
   login?: Resolver<ResolversTypes['Jwt'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'password' | 'username'>>;
   updateArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationUpdateArticleArgs, 'id'>>;
+  updateComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getArticles?: Resolver<Maybe<Array<ResolversTypes['Article']>>, ParentType, ContextType, Partial<QueryGetArticlesArgs>>;
+  getComments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType, Partial<QueryGetCommentsArgs>>;
   getUsers?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, Partial<QueryGetUsersArgs>>;
 };
 
@@ -232,6 +286,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = {
   Article?: ArticleResolvers<ContextType>;
+  Comment?: CommentResolvers<ContextType>;
   Jwt?: JwtResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

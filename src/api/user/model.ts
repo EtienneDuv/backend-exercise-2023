@@ -1,6 +1,7 @@
 import {CreationOptional, DataTypes} from 'sequelize';
 import {sequelize, CustomModel} from '../../database';
 import {ArticleModel} from '../article';
+import {CommentModel} from '../comment';
 
 export class UserModel extends CustomModel {
     declare id: CreationOptional<string>;
@@ -49,5 +50,12 @@ UserModel.hasMany(ArticleModel, {
         allowNull: false
     },
     constraints: true,
-    as         : 'author'
+});
+
+UserModel.hasMany(CommentModel, {
+    foreignKey: {
+        name     : 'authorId',
+        allowNull: false
+    },
+    constraints: true,
 });

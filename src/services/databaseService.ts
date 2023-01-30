@@ -19,6 +19,9 @@ export const truncateTables = async () => {
     return sequelize.sync({force: true});
 };
 
+/**
+ * Contains all instantiated Sequelize models
+ */
 export const models = (() => {
     let models = {};
     getFilePaths('src/api')

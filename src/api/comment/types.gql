@@ -12,4 +12,6 @@ type Query {
 
 type Mutation {
   createComment(articleId: String!, content: String!): Comment!
+  upVoteComment(commentId: Int): Boolean
+  downVoteComment(commentId: Int): Boolean
 }

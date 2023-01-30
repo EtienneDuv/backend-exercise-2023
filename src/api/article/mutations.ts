@@ -1,4 +1,4 @@
-import {ArticleModel} from './model';
+import {ArticleModel} from '../../database/models';
 import {Context} from '../../interfaces';
 import {rejectUnauthorized} from '../../services/utils';
 import {

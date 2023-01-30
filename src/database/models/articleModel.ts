@@ -1,6 +1,6 @@
 import {CreationOptional, DataTypes} from 'sequelize';
-import {sequelize, CustomModel} from '../../database';
-import {CommentModel} from '../comment';
+import {sequelize, CustomModel} from '..';
+import {CommentModel} from '../../database/models/commentModel';
 
 export class ArticleModel extends CustomModel {
     declare id: CreationOptional<string>;

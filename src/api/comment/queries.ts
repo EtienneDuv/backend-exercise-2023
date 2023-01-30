@@ -1,4 +1,4 @@
-import {CommentModel} from './model';
+import {CommentModel} from '../../database/models';
 import {Context} from '../../interfaces';
 import {rejectUnauthorized} from '../../services/utils';
 import {QueryGetCommentsArgs} from '../../generated/types';

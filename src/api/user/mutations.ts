@@ -1,6 +1,6 @@
 import {hashPassword, verifyPassword} from '../../services/hashService';
 import {jwtSign} from '../../services/jwtService';
-import {UserModel} from './model';
+import {UserModel} from '../../database/models';
 import {MutationCreateUserArgs, MutationLoginArgs, Jwt} from '../../generated/types';
 
 export const userMutations = {

@@ -1,4 +1,4 @@
-import {UserModel} from './model';
+import {UserModel} from '../../database/models';
 import {Context} from '../../interfaces';
 import {QueryGetUsersArgs} from '../../generated/types';
 import {rejectUnauthorized} from '../../services/utils';

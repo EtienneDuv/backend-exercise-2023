@@ -1,8 +1,8 @@
 import {faker} from '@faker-js/faker'; //https://fakerjs.dev/api/
 import {hashPassword} from '../../services/hashService';
-import {UserModel} from '../../api/user';
-import {ArticleModel} from '../../api/article';
-import {CommentModel} from '../../api/comment';
+import {UserModel} from '../../database/models';
+import {ArticleModel} from '../../database/models';
+import {CommentModel} from '../../database/models';
 
 const seed = async () => {
     // ----------------------------------

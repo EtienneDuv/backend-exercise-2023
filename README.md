@@ -21,24 +21,42 @@
 - ✔ CI/CD
 - new features:
   - ✔ Article CRUD
-  - Comment CR
+  - ✔ Comment CR
   - Comment +/-
   - Nested comments
+
+# Dev tools
+
+## Codegen
+
+When dev app is running (port 3000), `npm run codegen` generates the types from exposed graphQL schema. 
+These generated types (`src/generated`) are used to type args in all queries/mutations. 
 
 # Run app
 
 ## Dev environment
 
 **Run postgres container**
+
 `docker run --name devPostgres --env-file .env.dev -p 5432:5432 -d postgres`
 
+**Create tables**
+
+`npm run db:migrate`
+
+**Seed tables**
+
+`npm run db:seed`
+
 **Run the api**
+
 `npm run start:dev`
 
-## Prod
+## "Prod"
 
 - Copy the `.env` file in root folder
+- `npm run compose:prod`
+- Access Apollo sandbox at `http://localhost:13000`
 
-`docker-compose up -d`
-
-Access Apollo sandbox at `http://localhost:13000`
+Or same setup but using `.env.dev`:
+- `npm run compose:dev`

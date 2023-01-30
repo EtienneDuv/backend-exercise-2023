@@ -17,10 +17,7 @@ export const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS
     logging: POSTGRES_LOGGING
 });
 
-/**
- * SequelizeWrapper BaseModel
- * @class CustomModel
- */
+/** * @class CustomModel */
 export class CustomModel extends Model {
     /**
      * Search for a single instance or fail

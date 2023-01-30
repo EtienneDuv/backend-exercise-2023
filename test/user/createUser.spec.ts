@@ -2,19 +2,18 @@ import ctx from '..';
 import {randInt} from '../../src/services/utils';
 const {expect, request, db} = ctx;
 
-const username = 'testUser'+randInt();
-
-const createUserMutation = (username: string, pwd='testPassword') => `
-    mutation {
-        createUser(username: "${username}", password: "${pwd}") {
-            id,
-            username,
-            createdAt,
-        }
-    }
-`;
-
 describe('Create user', () => {
+    const username = 'testUser'+randInt();
+    const createUserMutation = (username: string, pwd='testPassword') => `
+        mutation {
+            createUser(username: "${username}", password: "${pwd}") {
+                id,
+                username,
+                createdAt,
+            }
+        }
+    `;
+
     after(async () => {
         await db.UserModel.destroy({
             where: {username}

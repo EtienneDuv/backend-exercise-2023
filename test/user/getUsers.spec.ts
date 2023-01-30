@@ -1,22 +1,22 @@
 import ctx from '..';
 import {jwtSign} from '../../src/services/jwtService';
+import {jwtMalformed, jwtInvalid} from '../utils';
 const {expect, request, db, data} = ctx;
-
-const getUsersQuery = (params = '') => `
-    query { 
-        getUsers ${params ? '('+params+')' : ''} { 
-            username 
-        }
-    }
-`;
 
 describe('Get users', () => {
     let jwt: string;
     let createdIds: string[] = [];
+    const getUsersQuery = (params = '') => `
+        query { 
+            getUsers ${params ? '('+params+')' : ''} { 
+                username 
+            }
+        }
+    `;
 
     before(async () => {
         createdIds = await data.createUsers(60);
-        jwt = jwtSign('someUserId', '30s');
+        jwt = jwtSign('someUserId', '10s');
     });
 
 
@@ -52,26 +52,6 @@ describe('Get users', () => {
         expect(data.length).to.be.eql(2);
     });
 
-
-    it('should fail - jwt malformed', async () => {
-        const res = await request
-            .post('/')
-            .send({query: getUsersQuery()})
-            .set('Authorization', 'Bearer WRONG_JWT');
-        expect(res._body.errors[0].message)
-            .to.be.eql('Context creation failed: jwt malformed');
-    });
-
-
-    it('should fail - invalid token', async () => {
-        const jwt = 'a'.repeat(36) +'.'+ 'b'.repeat(42) +'.'+ 'c'.repeat(36);
-
-        const res = await request
-            .post('/')
-            .send({query: getUsersQuery()})
-            .set('Authorization', 'Bearer '+jwt);
-
-        expect(res._body.errors[0].message)
-            .to.be.eql('Context creation failed: invalid token');
-    });
+    jwtMalformed(getUsersQuery());
+    jwtInvalid(getUsersQuery());
 });

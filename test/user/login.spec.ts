@@ -1,16 +1,16 @@
 import ctx from '..';
 const {expect, request, db, data} = ctx;
 
-const loginMutation = (username='testUser', pwd='testPassword') => `
-    mutation {
-        login(username: "${username}", password: "${pwd}") { 
-            token 
-        }
-    }
-`;
-
 describe('Login user', () => {
     let id = '';
+    const loginMutation = ({username='testUser', password='testPassword'}) => `
+        mutation {
+            login(username: "${username}", password: "${password}") { 
+                token 
+            }
+        }
+    `;
+
     before(async () => {
         id = await data.createUser();
     });
@@ -26,7 +26,7 @@ describe('Login user', () => {
     it('should return JWT token', async () => {
         const res = await request
             .post('/')
-            .send({query: loginMutation()});
+            .send({query: loginMutation({})});
         const data = res._body.data;
 
         expect(data)
@@ -34,13 +34,16 @@ describe('Login user', () => {
             .to.have.property('token');
         expect(data.login.token.length)
             .to.be.eql(169);
+
+        const jwtRegex = /^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-+/=]*)/;
+        expect(jwtRegex.test(data.login.token)).to.be.eql(true);
     });
 
 
     it('should fail - User not found', async () => {
         const res = await request
             .post('/')
-            .send({query: loginMutation('WRONG', 'testPassword')});
+            .send({query: loginMutation({username: 'WRONG'})});
         const body = res._body;
 
         expect(body).to.have.property('errors');
@@ -55,7 +58,7 @@ describe('Login user', () => {
     it('should fail - Password does not match', async () => {
         const res = await request
             .post('/')
-            .send({query: loginMutation('testUser', 'WRONG')});
+            .send({query: loginMutation({password: 'WRONG'})});
         const body = res._body;
 
         expect(body).to.have.property('errors');

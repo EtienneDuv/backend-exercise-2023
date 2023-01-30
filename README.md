@@ -20,14 +20,8 @@
 - ✔ tests
 - ✔ CI/CD
 - new features:
-  - Article
-    - Create
-    - Read
-    - Update
-    - Delete
-  - Comment
-    - Create
-    - Read
+  - ✔ Article CRUD
+  - Comment CR
   - Comment +/-
   - Nested comments
 

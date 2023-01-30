@@ -1,29 +1,24 @@
 import ctx from '..';
-const {expect, request, db} = ctx;
+const {expect, request, db, data} = ctx;
 
 const loginMutation = (username='testUser', pwd='testPassword') => `
     mutation {
-        login(data: {
-            username: "${username}",
-            password: "${pwd}"
-        }) { 
+        login(username: "${username}", password: "${pwd}") { 
             token 
         }
     }
 `;
 
-describe.only('Login user', () => {
+describe('Login user', () => {
+    let id = '';
     before(async () => {
-        await db.UserModel.create({
-            username: 'testUser',
-            password: '$2b$10$4eHD/IYtTfowQznn51183.WarrqZh7I1mHGt4tbyTmq8LJ756nzwW'
-        });
+        id = await data.createUser();
     });
 
 
     after(async () => {
         await db.UserModel.destroy({
-            where: {username: 'testUser'}
+            where: {id}
         });
     });
 

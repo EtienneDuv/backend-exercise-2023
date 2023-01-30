@@ -1,6 +1,6 @@
 import ctx from '..';
 import {jwtSign} from '../../src/services/jwtService';
-const {expect, request, db} = ctx;
+const {expect, request, db, data} = ctx;
 
 const getUsersQuery = (params = '') => `
     query { 
@@ -12,31 +12,17 @@ const getUsersQuery = (params = '') => `
 
 describe('Get users', () => {
     let jwt: string;
-    const usernames: string[] = [];
+    let createdIds: string[] = [];
 
     before(async () => {
-        await db.UserModel.destroy({
-            where: {username: usernames}
-        });
-        for (let i=0; i < 55; i++) {
-            usernames.push('testUser'+i);
-        }
-
-        // Create more than 50 users to test default limit
-        await db.UserModel.bulkCreate(
-            usernames.map(username => ({
-                username: username,
-                password: 'pwd'
-            }))
-        );
-
-        jwt = jwtSign('someUserId', '10s');
+        createdIds = await data.createUsers(60);
+        jwt = jwtSign('someUserId', '30s');
     });
 
 
     after(async () => {
         await db.UserModel.destroy({
-            where: {username: usernames}
+            where: {id: createdIds}
         });
     });
 

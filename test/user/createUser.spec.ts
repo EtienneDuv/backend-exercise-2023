@@ -6,10 +6,7 @@ const username = 'testUser'+randInt();
 
 const createUserMutation = (username: string, pwd='testPassword') => `
     mutation {
-        createUser(data: { 
-            username: "${username}",
-            password: "${pwd}" 
-        }) {
+        createUser(username: "${username}", password: "${pwd}") {
             id,
             username,
             createdAt,

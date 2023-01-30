@@ -1,4 +1,5 @@
 import {userMutations, userQueries, userResolvers} from './user';
+import {articleMutations, articleQueries, articleResolvers} from './article';
 import {getGraphqlTypeDefString} from '../services/fileService';
 
 export const typeDefs = `#graphql
@@ -10,9 +11,12 @@ export const typeDefs = `#graphql
 export const resolvers = {
     Query: {
         ... userQueries,
+        ...articleQueries,
     },
     Mutation: {
-        ... userMutations
+        ... userMutations,
+        ...articleMutations,
     },
-    User: userResolvers,
+    User   : userResolvers,
+    Article: articleResolvers
 };

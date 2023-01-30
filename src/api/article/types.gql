@@ -1,0 +1,23 @@
+type Article {
+  """ UUID identifier """
+  id: ID!
+  """ UUID of author """
+  authorId: ID!
+  title: String!
+  """ Short brief of the content """
+  perex: String!
+  content: String!
+  createdAt: String!
+  updatedAt: String!
+  # comments: [Comment]!
+}
+
+type Query {
+  getArticles(limit: Int): [Article!]
+}
+
+type Mutation {
+  createArticle(title: String!, perex: String!, content: String!): Article!
+  updateArticle(id: ID!, title: String, perex: String, content: String): Article!
+  deleteArticle(id: ID!): Boolean
+}

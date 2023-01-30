@@ -6,7 +6,8 @@ import {json} from 'body-parser';
 import express from 'express';
 import http from 'http';
 
-import {sequelize, createTables} from './database';
+import {sequelize} from './database';
+import {createTables, truncateTables} from './services/databaseService';
 import {typeDefs, resolvers} from './api';
 import config from './config';
 import {jwtVerify} from './services/jwtService';

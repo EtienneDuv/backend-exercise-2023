@@ -1,8 +1,9 @@
-import {CreationOptional, DataTypes, Model} from 'sequelize';
-import {sequelize} from '../../database';
+import {CreationOptional, DataTypes} from 'sequelize';
+import {sequelize, CustomModel} from '../../database';
+import {ArticleModel} from '../article';
 
-export class UserModel extends Model {
-    declare id: string;
+export class UserModel extends CustomModel {
+    declare id: CreationOptional<string>;
     declare username: string;
     declare password: string;
     declare createdAt: CreationOptional<Date>;
@@ -40,4 +41,13 @@ UserModel.init({
     timestamps     : true,
     updatedAt      : false,
     underscored    : false,
+});
+
+UserModel.hasMany(ArticleModel, {
+    foreignKey: {
+        name     : 'authorId',
+        allowNull: false
+    },
+    constraints: true,
+    as         : 'author'
 });

@@ -1,11 +1,9 @@
 type User {
   """ UUID identifier """
   id: ID! 
-  """ Unique name """
   username: String! 
-  """ User password """
+  """ Hash of password """
   password: String 
-  """ Creation date """
   createdAt: String! 
   # articles: [Article]!
   # comments: [Comment]!
@@ -15,16 +13,12 @@ type Jwt {
   token: String!
 }
 
-input CreateOrLoginUserData {
-  username: String!
-  password: String!
-}
-
 type Query {
   getUsers(limit: Int): [User!]
 }
 
 type Mutation {
-  createUser(data: CreateOrLoginUserData!): User!
-  login(data: CreateOrLoginUserData!): Jwt!
+  createUser(username: String!, password: String!): User!
+  """ Login with username/password, return JWT token """
+  login(username: String!, password: String!): Jwt!
 }

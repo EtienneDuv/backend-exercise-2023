@@ -5,7 +5,7 @@ import {MutationCreateUserArgs, MutationLoginArgs, Jwt} from '../../generated/ty
 
 export const userMutations = {
     createUser: async (_parent: unknown, args: MutationCreateUserArgs): Promise<object> => {
-        const {username, password} = args.data;
+        const {username, password} = args;
         const passwordHash = await hashPassword(password);
         return UserModel.create({
             username,
@@ -13,7 +13,7 @@ export const userMutations = {
         });
     },
     login: async (_parent: object, args: MutationLoginArgs): Promise<Jwt> => {
-        const {username, password} = args.data;
+        const {username, password} = args;
         const user: UserModel | null = await UserModel.findOne({
             where     : {username},
             attributes: ['id', 'password']

@@ -1,6 +1,5 @@
 import {Sequelize, Model} from 'sequelize';
 import config from '../config';
-import {getFilePaths} from '../services/fileService';
 
 const {
     POSTGRES_HOST,
@@ -19,30 +18,21 @@ export const sequelize = new Sequelize(POSTGRES_DB, POSTGRES_USER, POSTGRES_PASS
 });
 
 /**
- * Creates tables, ignore if already existed.
- * Used for dev only
- * @return {Promise} -
+ * SequelizeWrapper BaseModel
+ * @class CustomModel
  */
-export const createTables = async () => {
-    return sequelize.sync();
-};
-
-/**
- * Creates tables, dropping it first if it already existed.
- * Used for dev only
- * @return {Promise} -
- */
-export const truncateTables = async () => {
-    return sequelize.sync({force: true});
-};
-
-export const models = () => {
-    let models = {};
-    getFilePaths('src/api')
-        .filter(path => path.endsWith('model.ts'))
-        .map(path => require(path))
-        .forEach(model => {
-            models = {...models, ...model};
+export class CustomModel extends Model {
+    /**
+     * Search for a single instance or fail
+     * @param  {Object} options - A hash of options to describe the scope of the search
+     * @return {Promise} - Model instance
+     */
+    static async findOneOrFail (options = {}) {
+        return this.findOne(options).then(result => {
+            if (!result) {
+                throw new Error(`Resource ${this.name} not found. Options: ` + JSON.stringify(options));
+            }
+            return result;
         });
-    return models;
-};
+    }
+}

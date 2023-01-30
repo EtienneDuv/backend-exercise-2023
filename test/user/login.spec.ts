@@ -1,7 +1,7 @@
 import ctx from '..';
 const {expect, request, db, data} = ctx;
 
-describe('Login user', () => {
+export default () => {
     let id = '';
     const loginMutation = ({username='testUser', password='testPassword'}) => `
         mutation {
@@ -68,4 +68,4 @@ describe('Login user', () => {
             .to.have.property('message')
             .eql('Password does not match');
     });
-});
+};

@@ -3,7 +3,7 @@ import {jwtSign} from '../../src/services/jwtService';
 import {jwtMalformed, jwtInvalid} from '../utils';
 const {expect, request, db, data} = ctx;
 
-describe('Get users', () => {
+export default () => {
     let jwt: string;
     let createdIds: string[] = [];
     const getUsersQuery = (params = '') => `
@@ -54,4 +54,4 @@ describe('Get users', () => {
 
     jwtMalformed(getUsersQuery());
     jwtInvalid(getUsersQuery());
-});
+};

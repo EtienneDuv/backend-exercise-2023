@@ -2,7 +2,7 @@ import ctx from '..';
 import {randInt} from '../../src/services/utils';
 const {expect, request, db} = ctx;
 
-describe('Create user', () => {
+export default () => {
     const username = 'testUser'+randInt();
     const createUserMutation = (username: string, pwd='testPassword') => `
         mutation {
@@ -59,4 +59,4 @@ describe('Create user', () => {
             .to.have.property('message')
             .eql('Username already exists');
     });
-});
+};

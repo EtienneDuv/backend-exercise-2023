@@ -7,7 +7,6 @@ import express from 'express';
 import http from 'http';
 
 import {sequelize} from './database';
-import {createTables, truncateTables} from './services/databaseService';
 import {typeDefs, resolvers} from './api';
 import config from './config';
 import {jwtVerify} from './services/jwtService';
@@ -56,8 +55,6 @@ const main = async () => {
 
     // CHECK POSTGRESQL CONNECTION
     await sequelize.authenticate();
-    await createTables();
-    // await truncateTables();
 
     const {APP_PORT, NODE_ENV} = config;
     httpServer.listen({port: APP_PORT}, () => {

@@ -15,7 +15,10 @@
     "build:clean": "npm run clean && npm run build",
     "build": "tsc --build && npm run copy:gql",
     "copy:gql": "copyfiles \"src/**/*.gql\" build",
-    "clean": "rimraf build"
+    "clean": "rimraf build",
+    "db:migrate": "ts-node src/database/migrations/migration_createTables.ts",
+    "db:migrate:dev": "ts-node src/database/migrations/migration_createTables.ts -- dev",
+    "db:seed:dev": "ts-node src/database/seeders/seed_1.ts -- dev"
   },
   "repository": {
     "type": "git",

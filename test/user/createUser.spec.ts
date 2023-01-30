@@ -4,6 +4,19 @@ const {expect, request, db} = ctx;
 
 const username = 'testUser'+randInt();
 
+const createUserMutation = (username: string, pwd='testPassword') => `
+    mutation {
+        createUser(data: { 
+            username: "${username}",
+            password: "${pwd}" 
+        }) {
+            id,
+            username,
+            createdAt,
+        }
+    }
+`;
+
 describe('Create user', () => {
     after(async () => {
         await db.UserModel.destroy({
@@ -15,18 +28,7 @@ describe('Create user', () => {
     it('should create a new user', async () => {
         let res = await request
             .post('/')
-            .send({query: `
-                    mutation {
-                        createUser(data: { 
-                            username: "${username}",
-                            password: "testPassword" 
-                        }) {
-                            id
-                            username
-                            createdAt
-                        }
-                    }
-                `});
+            .send({query: createUserMutation(username)});
 
         // From API
         let data1 = res._body.data;
@@ -49,18 +51,7 @@ describe('Create user', () => {
     it('should fail - username already exists', async () => {
         const res = await request
             .post('/')
-            .send({query: `
-                    mutation {
-                        createUser(data: { 
-                            username: "${username}",
-                            password: "testPassword" 
-                        }) {
-                            id,
-                            username,
-                            createdAt,
-                        }
-                    }
-                `})
+            .send({query: createUserMutation(username)})
             .set('Accept', 'application/json');
 
         const body = res._body;

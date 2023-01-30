@@ -1,7 +1,18 @@
 import ctx from '..';
 const {expect, request, db} = ctx;
 
-describe('Login user', () => {
+const loginMutation = (username='testUser', pwd='testPassword') => `
+    mutation {
+        login(data: {
+            username: "${username}",
+            password: "${pwd}"
+        }) { 
+            token 
+        }
+    }
+`;
+
+describe.only('Login user', () => {
     before(async () => {
         await db.UserModel.create({
             username: 'testUser',
@@ -20,14 +31,7 @@ describe('Login user', () => {
     it('should return JWT token', async () => {
         const res = await request
             .post('/')
-            .send({query: `
-                    mutation {
-                        login(data: {
-                            username: "testUser",
-                            password: "testPassword" 
-                        }) { token }
-                    }
-                `});
+            .send({query: loginMutation()});
         const data = res._body.data;
 
         expect(data)
@@ -41,14 +45,7 @@ describe('Login user', () => {
     it('should fail - User not found', async () => {
         const res = await request
             .post('/')
-            .send({query: `
-                mutation {
-                    login(data: {
-                        username: "WRONG",
-                        password: "testPassword" 
-                    }) { token }
-                }
-            `});
+            .send({query: loginMutation('WRONG', 'testPassword')});
         const body = res._body;
 
         expect(body).to.have.property('errors');
@@ -63,14 +60,7 @@ describe('Login user', () => {
     it('should fail - Password does not match', async () => {
         const res = await request
             .post('/')
-            .send({query: `
-                mutation {
-                    login(data: {
-                        username: "testUser",
-                        password: "WRONG" 
-                    }) { token }
-                }
-            `});
+            .send({query: loginMutation('testUser', 'WRONG')});
         const body = res._body;
 
         expect(body).to.have.property('errors');

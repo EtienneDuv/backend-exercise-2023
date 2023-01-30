@@ -2,6 +2,14 @@ import ctx from '..';
 import {jwtSign} from '../../src/services/jwtService';
 const {expect, request, db} = ctx;
 
+const getUsersQuery = (params = '') => `
+    query { 
+        getUsers ${params ? '('+params+')' : ''} { 
+            username 
+        }
+    }
+`;
+
 describe('Get users', () => {
     let jwt: string;
     const usernames: string[] = [];
@@ -36,7 +44,7 @@ describe('Get users', () => {
     it('should return users - normal', async () => {
         const res = await request
             .post('/')
-            .send({query: 'query { getUsers { username } }'})
+            .send({query: getUsersQuery()})
             .set('Authorization', 'Bearer '+jwt);
 
         let data = res._body.data;
@@ -50,7 +58,7 @@ describe('Get users', () => {
     it('should return users - limit', async () => {
         const res = await request
             .post('/')
-            .send({query: 'query { getUsers (limit: 2) { username } }'})
+            .send({query: getUsersQuery('limit: 2')})
             .set('Authorization', 'Bearer '+jwt);
 
         const data = res._body.data.getUsers;
@@ -62,7 +70,7 @@ describe('Get users', () => {
     it('should fail - jwt malformed', async () => {
         const res = await request
             .post('/')
-            .send({query: 'query { getUsers { username } }'})
+            .send({query: getUsersQuery()})
             .set('Authorization', 'Bearer WRONG_JWT');
         expect(res._body.errors[0].message)
             .to.be.eql('Context creation failed: jwt malformed');
@@ -74,7 +82,7 @@ describe('Get users', () => {
 
         const res = await request
             .post('/')
-            .send({query: 'query { getUsers { username } }'})
+            .send({query: getUsersQuery()})
             .set('Authorization', 'Bearer '+jwt);
 
         expect(res._body.errors[0].message)

@@ -1,10 +1,14 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable valid-jsdoc */
+'use strict';
 import {faker} from '@faker-js/faker'; //https://fakerjs.dev/api/
 import {hashPassword} from '../../services/hashService';
 import {UserModel} from '../../api/user';
 import {ArticleModel} from '../../api/article';
 import {CommentModel} from '../../api/comment';
 
-const seed = async () => {
+/** @type {import('sequelize-cli').Migration} */
+export async function up () {
     // ----------------------------------
     // USER
     // ----------------------------------
@@ -53,8 +57,8 @@ const seed = async () => {
         });
     }
     await CommentModel.bulkCreate(commentPayloads);
-};
+}
 
-console.time('SEED DATABASE');
-seed();
-console.timeEnd('SEED DATABASE');
+export async function down () {
+    return;
+}

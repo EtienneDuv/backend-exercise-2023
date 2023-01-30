@@ -23,6 +23,7 @@
   ],
   "exclude": [
     "codegen.ts",
-    "./test"
+    "./test",
+    "sequelize.js"
   ]
 }

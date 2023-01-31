@@ -11,8 +11,9 @@ export class CommentModel extends CustomModel {
 
     async getScore (): Promise<number> {
         const votes = await CommentVoteModel.findAll({
-            where: {commentId: this.id},
-            raw  : true
+            where     : {commentId: this.id},
+            raw       : true,
+            attributes: ['value']
         });
         const values = votes.map(el => el.value);
         return values.reduce((previous, current) => previous + current, 0);

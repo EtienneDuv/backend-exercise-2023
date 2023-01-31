@@ -2,7 +2,11 @@ import {expect, assert} from 'chai';
 import supertest from 'supertest';
 
 import config from '../src/config';
-import {models} from '../src/services/databaseService';
+import {
+    UserModel,
+    ArticleModel,
+    CommentModel,
+} from '../src/database/models';
 import dataGenerationMethods from './data';
 
 const url = `http://${process.env.APP_HOST||'localhost'}:${config.APP_PORT}/`;
@@ -17,7 +21,9 @@ export default {
     expect,
     request,
     db: {
-        ...models
+        UserModel,
+        ArticleModel,
+        CommentModel,
     },
     data: dataGenerationMethods
 } as LooseObject;

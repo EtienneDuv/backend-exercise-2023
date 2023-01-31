@@ -18,17 +18,3 @@ export const createTables = async () => {
 export const truncateTables = async () => {
     return sequelize.sync({force: true});
 };
-
-/**
- * Contains all instantiated Sequelize models
- */
-export const models = (() => {
-    let models = {};
-    getFilePaths('src/api')
-        .filter(path => path.endsWith('model.ts'))
-        .map(path => require(path))
-        .forEach(model => {
-            models = {...models, ...model};
-        });
-    return models;
-})();

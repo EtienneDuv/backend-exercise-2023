@@ -37,11 +37,13 @@ export const articleMutations = {
         const context = ctx as Context;
 
         const article = await ArticleModel.findOneOrFail({
-            where: {
-                authorId: context.userId,
-                id      : args.id
-            }
-        });
+            where: {id: args.id},
+        }) as ArticleModel;
+
+        if (article.authorId !== context.userId) {
+            throw new Error('ARTICLE_NOT_OWNED - you are not the owner of the article.');
+        }
+
         await article.destroy();
     },
 };

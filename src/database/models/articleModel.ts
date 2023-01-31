@@ -50,6 +50,12 @@ ArticleModel.init({
             return new Date(this.getDataValue('updatedAt')).toISOString();
         }
     },
+    deletedAt: {
+        type: DataTypes.DATE,
+        get () {
+            return new Date(this.getDataValue('deletedAt')).toISOString();
+        }
+    },
 }, {
     sequelize,
     freezeTableName: true,

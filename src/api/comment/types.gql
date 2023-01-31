@@ -5,6 +5,7 @@ type Comment {
   content: String!
   createdAt: String!
   score: Int!
+  children: [Comment]!
 }
 
 type Query {
@@ -13,6 +14,7 @@ type Query {
 
 type Mutation {
   createComment(articleId: String!, content: String!): Comment!
+  answerComment(commentId: String!, content: String!): Comment!
   upVoteComment(commentId: Int): Boolean
   downVoteComment(commentId: Int): Boolean
 }

@@ -5,6 +5,7 @@ import {
     MutationCreateCommentArgs,
     MutationUpVoteCommentArgs,
     MutationDownVoteCommentArgs,
+    MutationAnswerCommentArgs,
 } from '../../generated/types';
 
 export const commentMutations = {
@@ -16,6 +17,24 @@ export const commentMutations = {
             ...args,
             authorId: context.userId
         });
+    },
+    answerComment: async (_parent: unknown, args: MutationAnswerCommentArgs, ctx: object): Promise<object> => {
+        rejectUnauthorized(ctx as Context);
+        const context = ctx as Context;
+
+        const parentComment = await CommentModel.findOneOrFail({
+            where: {id: args.commentId}
+        }) as CommentModel;
+
+        const childComment = await CommentModel.create({
+            articleId: parentComment.articleId,
+            content  : args.content,
+            authorId : context.userId
+        });
+
+        await parentComment.addChildComment(childComment.id);
+
+        return childComment;
     },
     upVoteComment: async (_parent: unknown, args: MutationUpVoteCommentArgs, ctx: object): Promise<boolean> => {
         const context = ctx as Context;

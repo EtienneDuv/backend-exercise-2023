@@ -32,9 +32,11 @@ export type Comment = {
   __typename?: 'Comment';
   articleId: Scalars['ID'];
   authorId: Scalars['ID'];
+  children: Array<Maybe<Comment>>;
   content: Scalars['String'];
   createdAt: Scalars['String'];
   id: Scalars['ID'];
+  score: Scalars['Int'];
 };
 
 export type Jwt = {
@@ -44,6 +46,7 @@ export type Jwt = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  answerComment: Comment;
   createArticle: Article;
   createComment: Comment;
   createUser: User;
@@ -53,6 +56,12 @@ export type Mutation = {
   login: Jwt;
   upVoteComment?: Maybe<Scalars['Boolean']>;
   updateArticle: Article;
+};
+
+
+export type MutationAnswerCommentArgs = {
+  commentId: Scalars['String'];
+  content: Scalars['String'];
 };
 
 
@@ -244,9 +253,11 @@ export type ArticleResolvers<ContextType = any, ParentType extends ResolversPare
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   articleId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   authorId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  children?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  score?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -256,6 +267,7 @@ export type JwtResolvers<ContextType = any, ParentType extends ResolversParentTy
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  answerComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationAnswerCommentArgs, 'commentId' | 'content'>>;
   createArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationCreateArticleArgs, 'content' | 'perex' | 'title'>>;
   createComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'articleId' | 'content'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;

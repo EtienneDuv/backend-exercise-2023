@@ -1,6 +1,7 @@
 import {CreationOptional, DataTypes} from 'sequelize';
 import {sequelize, CustomModel} from '..';
 import {CommentVoteModel} from './commentVoteModel';
+import {ChildCommentModel} from './childCommentModel';
 
 export class CommentModel extends CustomModel {
     declare id: CreationOptional<string>;
@@ -32,6 +33,13 @@ export class CommentModel extends CustomModel {
             commentId: this.id,
             ip       : ipAddress,
             value    : -1
+        });
+    }
+
+    async addChildComment (childCommentId: string): Promise<void> {
+        await ChildCommentModel.create({
+            parentId: this.id,
+            childId : childCommentId,
         });
     }
 }
@@ -72,4 +80,15 @@ CommentModel.init({
 
 CommentModel.hasMany(CommentVoteModel, {
     foreignKey: 'commentId'
+});
+
+CommentModel.belongsToMany(CommentModel, {
+    foreignKey: 'parentId',
+    as        : 'children',
+    through   : ChildCommentModel
+});
+
+CommentModel.hasOne(CommentModel, {
+    foreignKey: 'childId',
+    as        : 'parent',
 });

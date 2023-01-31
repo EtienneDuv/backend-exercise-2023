@@ -5,6 +5,7 @@ import {
     ArticleModel,
     CommentModel,
     CommentVoteModel,
+    ChildCommentModel,
 } from '../../database/models';
 
 const seed = async () => {
@@ -60,6 +61,31 @@ const seed = async () => {
     const commentIds = comments
         .map(el => el.get({plain: true}))
         .map(el => el.id);
+
+    // ----------------------------------
+    // CHILD COMMENT
+    // ----------------------------------
+    const childCommentPromises: Promise<object>[] = [];
+
+    const firstLevelIds = commentIds.slice(0, 5);
+    const secondLevelIds = commentIds.slice(6, 10);
+    const thirdLevelIds = commentIds.slice(10);
+
+    secondLevelIds.forEach(id => {
+        childCommentPromises.push(ChildCommentModel.create({
+            childId : id,
+            parentId: faker.helpers.arrayElement(firstLevelIds),
+        }));
+    });
+    thirdLevelIds.forEach(id => {
+        childCommentPromises.push(ChildCommentModel.create({
+            childId : id,
+            parentId: faker.helpers.arrayElement(secondLevelIds),
+        }));
+    });
+
+    // can't use bulkCreate for some obscure reason
+    await Promise.all(childCommentPromises);
 
     // ----------------------------------
     // COMMENT VOTES

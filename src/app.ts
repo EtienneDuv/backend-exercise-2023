@@ -5,11 +5,13 @@ import cors from 'cors';
 import {json} from 'body-parser';
 import express from 'express';
 import http from 'http';
+import ip from 'ip';
 
 import {sequelize} from './database';
 import {typeDefs, resolvers} from './api';
 import config from './config';
 import {jwtVerify} from './services/jwtService';
+import {Context} from './interfaces';
 
 const main = async () => {
     const app = express();
@@ -30,25 +32,29 @@ const main = async () => {
         expressMiddleware(server, {
             // Adds userId in Context if valid jwt provided
             context: async ({req}) => {
-                if (req.body.operationName === 'IntrospectionQuery') return {};
-                if (!(req.headers && req.headers.authorization)) return {};
+                const ctx: Context = {
+                    ipAddress: ip.address()
+                };
+                if (req.body.operationName === 'IntrospectionQuery') return ctx;
+                if (!(req.headers && req.headers.authorization)) return ctx;
 
                 const {0: bearer, 1: token} = req.headers.authorization.split(' ');
-                if (!(bearer === 'Bearer')) return {};
+                if (!(bearer === 'Bearer')) return ctx;
 
                 let jwtData;
                 try {
                     jwtData = jwtVerify(token);
                 } catch (error) {
                     if (error instanceof Error) {
-                        if (error.name === 'TokenExpiredError') return {};
+                        if (error.name === 'TokenExpiredError') return ctx;
                         throw error;
                     }
                 }
 
-                if (!jwtData) return {};
+                if (!jwtData) return ctx;
 
-                return {userId: jwtData.userId};
+                ctx.userId = jwtData.userId;
+                return ctx;
             }
         }),
     );

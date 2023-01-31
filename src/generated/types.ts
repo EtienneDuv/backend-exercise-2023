@@ -48,11 +48,11 @@ export type Mutation = {
   createComment: Comment;
   createUser: User;
   deleteArticle?: Maybe<Scalars['Boolean']>;
-  deleteComment?: Maybe<Scalars['Boolean']>;
+  downVoteComment?: Maybe<Scalars['Boolean']>;
   /**  Login with username/password, return JWT token  */
   login: Jwt;
+  upVoteComment?: Maybe<Scalars['Boolean']>;
   updateArticle: Article;
-  updateComment: Comment;
 };
 
 
@@ -64,9 +64,8 @@ export type MutationCreateArticleArgs = {
 
 
 export type MutationCreateCommentArgs = {
+  articleId: Scalars['String'];
   content: Scalars['String'];
-  perex: Scalars['String'];
-  title: Scalars['String'];
 };
 
 
@@ -81,8 +80,8 @@ export type MutationDeleteArticleArgs = {
 };
 
 
-export type MutationDeleteCommentArgs = {
-  id: Scalars['ID'];
+export type MutationDownVoteCommentArgs = {
+  commentId?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -92,15 +91,12 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationUpdateArticleArgs = {
-  content?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
-  perex?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
+export type MutationUpVoteCommentArgs = {
+  commentId?: InputMaybe<Scalars['Int']>;
 };
 
 
-export type MutationUpdateCommentArgs = {
+export type MutationUpdateArticleArgs = {
   content?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
   perex?: InputMaybe<Scalars['String']>;
@@ -261,13 +257,13 @@ export type JwtResolvers<ContextType = any, ParentType extends ResolversParentTy
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationCreateArticleArgs, 'content' | 'perex' | 'title'>>;
-  createComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'content' | 'perex' | 'title'>>;
+  createComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'articleId' | 'content'>>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;
   deleteArticle?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteArticleArgs, 'id'>>;
-  deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
+  downVoteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<MutationDownVoteCommentArgs>>;
   login?: Resolver<ResolversTypes['Jwt'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'password' | 'username'>>;
+  upVoteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<MutationUpVoteCommentArgs>>;
   updateArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationUpdateArticleArgs, 'id'>>;
-  updateComment?: Resolver<ResolversTypes['Comment'], ParentType, ContextType, RequireFields<MutationUpdateCommentArgs, 'id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

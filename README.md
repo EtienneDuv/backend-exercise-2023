@@ -22,7 +22,7 @@
 - new features:
   - ✔ Article CRUD
   - ✔ Comment CR
-  - Comment +/-
+  - ✔ Comment +/-
   - Nested comments
 
 # Dev tools

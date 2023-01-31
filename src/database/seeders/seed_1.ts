@@ -1,8 +1,11 @@
 import {faker} from '@faker-js/faker'; //https://fakerjs.dev/api/
 import {hashPassword} from '../../services/hashService';
-import {UserModel} from '../../database/models';
-import {ArticleModel} from '../../database/models';
-import {CommentModel} from '../../database/models';
+import {
+    UserModel,
+    ArticleModel,
+    CommentModel,
+    CommentVoteModel,
+} from '../../database/models';
 
 const seed = async () => {
     // ----------------------------------
@@ -52,7 +55,24 @@ const seed = async () => {
             content  : faker.lorem.sentence(8),
         });
     }
-    await CommentModel.bulkCreate(commentPayloads);
+    const comments = await CommentModel.bulkCreate(commentPayloads);
+
+    const commentIds = comments
+        .map(el => el.get({plain: true}))
+        .map(el => el.id);
+
+    // ----------------------------------
+    // COMMENT VOTES
+    // ----------------------------------
+    const commentVotesPayloads = [];
+    for (let i = 0; i < 30; i++) {
+        commentVotesPayloads.push({
+            commentId: faker.helpers.arrayElement(commentIds),
+            value    : faker.helpers.arrayElement([1, 1, 1, -1]),
+            ip       : faker.internet.ip(),
+        });
+    }
+    await CommentVoteModel.bulkCreate(commentVotesPayloads);
 };
 
 console.time('SEED DATABASE');

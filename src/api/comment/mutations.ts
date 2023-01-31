@@ -17,10 +17,24 @@ export const commentMutations = {
             authorId: context.userId
         });
     },
-    upVoteComment: async (_parent: unknown, args: MutationUpVoteCommentArgs, ctx: object): Promise<object> => {
-        return CommentModel.create({
-            ...args,
-            authorId: context.userId
-        });
+    upVoteComment: async (_parent: unknown, args: MutationUpVoteCommentArgs, ctx: object): Promise<boolean> => {
+        const context = ctx as Context;
+        // Check if comment exists
+        const comment = await CommentModel.findOneOrFail({
+            where: {id: args.commentId}
+        }) as CommentModel;
+
+        await comment.upVote(context.ipAddress);
+        return true;
+    },
+    downVoteComment: async (_parent: unknown, args: MutationDownVoteCommentArgs, ctx: object): Promise<boolean> => {
+        const context = ctx as Context;
+        // Check if comment exists
+        const comment = await CommentModel.findOneOrFail({
+            where: {id: args.commentId}
+        }) as CommentModel;
+
+        await comment.downVote(context.ipAddress);
+        return true;
     },
 };

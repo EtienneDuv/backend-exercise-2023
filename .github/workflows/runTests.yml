@@ -25,7 +25,10 @@ jobs:
         echo "APP_HOST=localhost" >> .env.dev
         echo "APP_PORT=13000" >> .env.dev
 
-    - name: npm run test
+    - name: Create tables
+      run: npm run db:migrate:dev
+
+    - name: Run tests
       run: npm run test
 
     - name: Stop containers

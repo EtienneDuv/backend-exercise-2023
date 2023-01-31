@@ -4,6 +4,7 @@ type Comment {
   authorId: ID!
   content: String!
   createdAt: String!
+  score: Int!
 }
 
 type Query {

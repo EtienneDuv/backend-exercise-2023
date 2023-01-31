@@ -1,4 +1,4 @@
-import {UserModel} from '../../src/api/user';
+import {UserModel} from '../../src/database/models';
 import defaults from './defaults';
 
 export default {

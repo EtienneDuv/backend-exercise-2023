@@ -31,11 +31,9 @@ These generated types (`src/generated/types.ts`) are used to type args in all qu
 
 ## Prod environment - docker-compose
 
-Import `postman_collection.json` in Postman to have prepared queries
 
-- Copy the `.env` file in root folder
-- `npm run compose:prod`
-- Access Apollo sandbox at `http://localhost:13000`
 
-Or same setup but using `.env.dev`:
-- `npm run compose:dev`
+- `npm run compose:dev` will use `.env.dev` file. When hosting the api, we would run `npm run compose:prod` and copy `.env` file on the server.
+- try the api:
+  - Access Apollo sandbox at `http://localhost:13000`
+  - Import `postman_collection.json` in Postman to have prepared queries

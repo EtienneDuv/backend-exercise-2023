@@ -54,7 +54,7 @@ const seed = async () => {
     // COMMENT
     // ----------------------------------
     const commentPayloads = [];
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 30; i++) {
         commentPayloads.push({
             authorId : faker.helpers.arrayElement(userIds),
             articleId: faker.helpers.arrayElement(articleIds),
@@ -70,33 +70,50 @@ const seed = async () => {
     // ----------------------------------
     // CHILD COMMENT
     // ----------------------------------
-    const childCommentPromises: Promise<object>[] = [];
+    let promises: Promise<object>[] = [];
 
-    const firstLevelIds = commentIds.slice(0, 5);
-    const secondLevelIds = commentIds.slice(6, 10);
-    const thirdLevelIds = commentIds.slice(10);
+    const firstLevelIds = commentIds.slice(0, 10);
+    const secondLevelIds = commentIds.slice(10, 20);
+    const thirdLevelIds = commentIds.slice(20);
 
     secondLevelIds.forEach(id => {
-        childCommentPromises.push(ChildCommentModel.create({
-            childId : id,
-            parentId: faker.helpers.arrayElement(firstLevelIds),
-        }));
+        const parentId = faker.helpers.arrayElement(firstLevelIds);
+        const parentComment = comments.find(el => el.id==parentId);
+        if (!parentComment) throw new Error('Seed error');
+
+        promises.push(
+            ChildCommentModel.create({childId: id, parentId}),
+            CommentModel.update(
+                {articleId: parentComment.articleId},
+                {where: {id: id}}
+            )
+        );
     });
+    await Promise.all(promises);
+    promises = [];
+
     thirdLevelIds.forEach(id => {
-        childCommentPromises.push(ChildCommentModel.create({
-            childId : id,
-            parentId: faker.helpers.arrayElement(secondLevelIds),
-        }));
+        const parentId = faker.helpers.arrayElement(secondLevelIds);
+        const parentComment = comments.find(el => el.id==parentId);
+        if (!parentComment) throw new Error('Seed error');
+
+        promises.push(
+            ChildCommentModel.create({childId: id, parentId}),
+            CommentModel.update(
+                {articleId: parentComment.articleId},
+                {where: {id: id}}
+            )
+        );
     });
 
     // can't use bulkCreate for some obscure reason
-    await Promise.all(childCommentPromises);
+    await Promise.all(promises);
 
     // ----------------------------------
     // COMMENT VOTES
     // ----------------------------------
     const commentVotesPayloads = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 50; i++) {
         commentVotesPayloads.push({
             commentId: faker.helpers.arrayElement(commentIds),
             value    : faker.helpers.arrayElement([1, 1, 1, -1]),

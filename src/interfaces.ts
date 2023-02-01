@@ -7,3 +7,7 @@ export interface JwtPayload {
   userId: string;
   exp: number;
 }
+
+export interface LooseObject {
+  [key: string]: any
+}

@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "83d91d5f-da57-4f18-97b3-617046820ed0",
+		"name": "Applifting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "CreateUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    createUser (\r\n        username: \"testUser1\"\r\n        password: \"testPwd\"\r\n    ) {\r\n        id\r\n        username\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "# Use received token in collection variable to set JWT variable\r\n# you will need it for other queries/mutations\r\nmutation {\r\n    login (\r\n        username: \"testUser1\"\r\n        password: \"testPwd\"\r\n    ) {\r\n        token\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    getUsers {\r\n        username\r\n        id\r\n        comments {\r\n            content\r\n            score\r\n            children {\r\n                content\r\n                score\r\n            }\r\n        }\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ARTICLE",
+			"item": [
+				{
+					"name": "CreateArticle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    createArticle (\r\n        title: \"My first title\"\r\n        perex: \"short description of my article\"\r\n        content: \"Lorem ipsum article. Lorem ipsum article. Lorem ipsum article. Lorem ipsum article.\\nLorem ipsum article. Lorem ipsum article. Lorem ipsum article. Lorem ipsum article.\\nLorem ipsum article. Lorem ipsum article. Lorem ipsum article. Lorem ipsum article.\\nLorem ipsum article. Lorem ipsum article. Lorem ipsum article. Lorem ipsum article.\"\r\n    ) {\r\n        id\r\n        title\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateArticle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    updateArticle (\r\n        id: \"[article ID]\"\r\n        title: \"My first updated title\"\r\n    ) {\r\n        id\r\n        title\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteArticle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    deleteArticle (id: \"[article ID]\")\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetArticles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    getArticles (limit: 5) {\r\n        id\r\n        title\r\n        comments {\r\n            content\r\n            score\r\n            children {\r\n                content\r\n                children {\r\n                    content\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "COMMENT",
+			"item": [
+				{
+					"name": "CreateComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    createComment (\r\n        articleId: \"[article ID]\"\r\n        content: \"This is a nice article\"\r\n    ) {\r\n        id\r\n        content\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AnswerComment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    answerComment (\r\n        commentId: 1\r\n        content: \"I agree with this comment\"\r\n    ) {\r\n        id\r\n        content\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpVoteComment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    upVoteComment (commentId: 1)\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DownVoteComment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n    downVoteComment (commentId: 1)\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetComments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    getComments (limit: 10) {\r\n        content\r\n        score\r\n        children {\r\n            id\r\n            content\r\n            children {\r\n                id\r\n                content\r\n            }\r\n        }\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "JWT",
+			"value": "Put token from Login mutation here",
+			"type": "default"
+		},
+		{
+			"key": "API_PORT",
+			"value": "13000",
+			"type": "default"
+		}
+	]
+}

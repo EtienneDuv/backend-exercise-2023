@@ -26,7 +26,8 @@ export default () => {
             where: {id: userId}
         });
         await db.ArticleModel.destroy({
-            where: {id: articleIds}
+            where   : {id: articleIds},
+            paranoid: false
         });
     });
 

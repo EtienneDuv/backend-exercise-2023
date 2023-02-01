@@ -9,7 +9,7 @@ export default () => {
     let jwt = '';
     const deleteArticleMutation = (articleId = data.defaults.defaultArticle.id) => `
         mutation {
-            deleteArticle(id: "${articleId}") 
+            deleteArticle(articleId: "${articleId}") 
         }
     `;
 

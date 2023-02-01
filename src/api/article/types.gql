@@ -9,15 +9,15 @@ type Article {
   content: String!
   createdAt: String!
   updatedAt: String!
-  # comments: [Comment]!
+  comments: [Comment!]!
 }
 
 type Query {
-  getArticles(limit: Int): [Article!]
+  getArticles(limit: Int): [Article!]!
 }
 
 type Mutation {
   createArticle(title: String!, perex: String!, content: String!): Article!
-  updateArticle(id: ID!, title: String, perex: String, content: String): Article!
-  deleteArticle(id: ID!): Boolean
+  updateArticle(articleId: ID!, title: String, perex: String, content: String): Article!
+  deleteArticle(articleId: ID!): Boolean
 }

@@ -87,8 +87,3 @@ CommentModel.belongsToMany(CommentModel, {
     as        : 'children',
     through   : ChildCommentModel
 });
-
-CommentModel.hasOne(CommentModel, {
-    foreignKey: 'childId',
-    as        : 'parent',
-});

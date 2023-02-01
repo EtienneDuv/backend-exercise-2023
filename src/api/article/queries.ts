@@ -4,7 +4,7 @@ import {rejectUnauthorized} from '../../services/utils';
 import {QueryGetArticlesArgs} from '../../generated/types';
 
 export const articleQueries = {
-    getArticles: async (_parent: unknown, args: QueryGetArticlesArgs, ctx: object): Promise<object> => {
+    getArticles: async (_parent: unknown, args: QueryGetArticlesArgs, ctx: object): Promise<ArticleModel[]> => {
         rejectUnauthorized(ctx as Context);
 
         let {limit} = args;

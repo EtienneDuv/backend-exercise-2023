@@ -1,14 +1,12 @@
 import {CommentModel, ChildCommentModel} from '../../database/models';
 
 export const commentResolvers = {
-    score: async (parent: unknown): Promise<number> => {
-        const comment = parent as CommentModel;
-        return comment.getScore();
+    score: async (parent: CommentModel): Promise<number> => {
+        return parent.getScore();
     },
-    children: async (parent: unknown): Promise<object[]> => {
-        const comment = parent as CommentModel;
+    children: async (parent: CommentModel): Promise<CommentModel[]> => {
         const children = await ChildCommentModel.findAll({
-            where: {parentId: comment.id},
+            where: {parentId: parent.id},
             raw  : true
         });
         const childrenId = children.map(el => el.childId);

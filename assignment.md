@@ -1,26 +1,21 @@
 # Backend Developer Exercise
 
 ## Introduction
-
-- your task is to implement a simple single-user blogging engine in Node.js
-- we realize that some subtasks can be very time consuming, if you just don't have the time, you can write short text description of how would you solve the problem
+Your task is to implement a simple single-user blogging engine in Node.js
 
 ## Technologies
-
 - Apollo Server
 - Express
 - PostgreSQL
 - Sequelize
-- Docker
 - Chai/Mocha
 - Typescript
 - Docker
 
 ## The Exercise
-
 - design the API yourself and document it
   - GraphQL documentation comments in schema
-  - for GraphQL, expose GraphiQL or GraphQL Playground
+  - expose GraphQL Playground
 - dockerize your app
   - create a Dockerfile for your app
   - create a docker-compose file that can be used to run your app with all dependencies

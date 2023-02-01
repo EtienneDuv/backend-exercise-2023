@@ -9,7 +9,7 @@ import {
 } from '../../generated/types';
 
 export const commentMutations = {
-    createComment: async (_parent: unknown, args: MutationCreateCommentArgs, ctx: object): Promise<object> => {
+    createComment: async (_parent: unknown, args: MutationCreateCommentArgs, ctx: object): Promise<CommentModel> => {
         rejectUnauthorized(ctx as Context);
         const context = ctx as Context;
 
@@ -18,7 +18,7 @@ export const commentMutations = {
             authorId: context.userId
         });
     },
-    answerComment: async (_parent: unknown, args: MutationAnswerCommentArgs, ctx: object): Promise<object> => {
+    answerComment: async (_parent: unknown, args: MutationAnswerCommentArgs, ctx: object): Promise<CommentModel> => {
         rejectUnauthorized(ctx as Context);
         const context = ctx as Context;
 
@@ -36,7 +36,7 @@ export const commentMutations = {
 
         return childComment;
     },
-    upVoteComment: async (_parent: unknown, args: MutationUpVoteCommentArgs, ctx: object): Promise<boolean> => {
+    upVoteComment: async (_parent: unknown, args: MutationUpVoteCommentArgs, ctx: object): Promise<void> => {
         const context = ctx as Context;
         // Check if comment exists
         const comment = await CommentModel.findOneOrFail({
@@ -44,9 +44,8 @@ export const commentMutations = {
         }) as CommentModel;
 
         await comment.upVote(context.ipAddress);
-        return true;
     },
-    downVoteComment: async (_parent: unknown, args: MutationDownVoteCommentArgs, ctx: object): Promise<boolean> => {
+    downVoteComment: async (_parent: unknown, args: MutationDownVoteCommentArgs, ctx: object): Promise<void> => {
         const context = ctx as Context;
         // Check if comment exists
         const comment = await CommentModel.findOneOrFail({
@@ -54,6 +53,5 @@ export const commentMutations = {
         }) as CommentModel;
 
         await comment.downVote(context.ipAddress);
-        return true;
     },
 };

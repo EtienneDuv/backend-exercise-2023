@@ -5,16 +5,16 @@ type Comment {
   content: String!
   createdAt: String!
   score: Int!
-  children: [Comment]!
+  children: [Comment!]!
 }
 
 type Query {
-  getComments(limit: Int): [Comment!]
+  getComments(limit: Int): [Comment!]!
 }
 
 type Mutation {
-  createComment(articleId: String!, content: String!): Comment!
-  answerComment(commentId: String!, content: String!): Comment!
-  upVoteComment(commentId: Int): Boolean
-  downVoteComment(commentId: Int): Boolean
+  createComment(articleId: ID!, content: String!): Comment!
+  answerComment(commentId: ID!, content: String!): Comment!
+  upVoteComment(commentId: ID!): Boolean
+  downVoteComment(commentId: ID!): Boolean
 }

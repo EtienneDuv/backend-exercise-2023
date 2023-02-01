@@ -5,8 +5,8 @@ type User {
   """ Hash of password """
   password: String 
   createdAt: String! 
-  # articles: [Article]!
-  # comments: [Comment]!
+  articles: [Article!]!
+  comments: [Comment!]!
 }
 
 type Jwt {
@@ -14,7 +14,7 @@ type Jwt {
 }
 
 type Query {
-  getUsers(limit: Int): [User!]
+  getUsers(limit: Int): [User!]!
 }
 
 type Mutation {

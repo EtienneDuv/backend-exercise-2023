@@ -1,58 +1,37 @@
 # Applifting Blog Engine fullstack exercise
 
-### Relevant links
-
-- [Assignment](https://github.com/Applifting/fullstack-exercise/blob/master/assignment.md)
-- [Prototype](https://www.figma.com/proto/VagZOrr3TjTAxGCpCUTSrO/Applifting-%7C-Full-Stack-Cvi%C4%8Den%C3%AD?node-id=2%3A3&viewport=148%2C245%2C0.12103988230228424&scaling=min-zoom)
-- [Screens](https://www.figma.com/file/VagZOrr3TjTAxGCpCUTSrO/Applifting-|-Full-Stack-Cvičení)
-- [OpenAPI specification](https://github.com/Applifting/fullstack-exercise/blob/master/api.yml)
-- [JSON schema specification for WebSocket API](https://github.com/Applifting/fullstack-exercise/blob/master/ws.json)
-- [Deployed Backend](https://fullstack.exercise.applifting.cz) `https://fullstack.exercise.applifting.cz`
-
-# TODO
-
-- ✔ server
-- ✔ basic structure
-- ✔ sequelize + db
-- ✔ authentication
-- ✔ type generation codegen
-- ✔ dockerize
-- ✔ tests
-- ✔ CI/CD
-- new features:
-  - ✔ Article CRUD
-  - ✔ Comment CR
-  - ✔ Comment +/-
-  - Nested comments
+- [Assignment](./assignment.md)
 
 # Dev tools
 
 ## Codegen
 
-When dev app is running (port 3000), `npm run codegen` generates the types from exposed graphQL schema. 
-These generated types (`src/generated`) are used to type args in all queries/mutations. 
+When dev api is running (port 3000), `npm run codegen` generates the types from exposed graphQL schema.
 
-# Run app
+These generated types (`src/generated/types.ts`) are used to type args in all queries/mutations. 
+
+# Run and try api
 
 ## Dev environment
 
 **Run postgres container**
-
 `docker run --name devPostgres --env-file .env.dev -p 5432:5432 -d postgres`
 
 **Create tables**
-
-`npm run db:migrate`
+`npm run db:migrate:dev`
 
 **Seed tables**
-
-`npm run db:seed`
+`npm run db:seed:dev`
 
 **Run the api**
-
 `npm run start:dev`
 
-## "Prod"
+**Access sandbox** 
+`localhost:3000`. You can play around and see documentation
+
+## Prod environment - docker-compose
+
+Import `postman_collection.json` in Postman to have prepared queries
 
 - Copy the `.env` file in root folder
 - `npm run compose:prod`

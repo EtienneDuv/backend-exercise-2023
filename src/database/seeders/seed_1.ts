@@ -13,7 +13,7 @@ const seed = async () => {
     // USER
     // ----------------------------------
     const userPayloads = [];
-    const password = await hashPassword('password');
+    const password = await hashPassword('userPwd');
     for (let i = 0; i < 5; i++) {
         const username = faker.internet.userName('test');
         userPayloads.push({
@@ -22,6 +22,11 @@ const seed = async () => {
         });
     }
     const users = await UserModel.bulkCreate(userPayloads);
+
+    console.log('Use one of those to login: ', {
+        username: userPayloads.map(el => el.username),
+        password: 'userPwd'
+    });
 
     const userIds = users
         .map(el => el.get({plain: true}))

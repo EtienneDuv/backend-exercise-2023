@@ -4,7 +4,7 @@ import {UserModel} from '../../database/models';
 import {MutationCreateUserArgs, MutationLoginArgs, Jwt} from '../../generated/types';
 
 export const userMutations = {
-    createUser: async (_parent: unknown, args: MutationCreateUserArgs): Promise<object> => {
+    createUser: async (_parent: unknown, args: MutationCreateUserArgs): Promise<UserModel> => {
         const {username, password} = args;
         const passwordHash = await hashPassword(password);
         return UserModel.create({

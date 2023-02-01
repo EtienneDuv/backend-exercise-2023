@@ -4,7 +4,7 @@ import {rejectUnauthorized} from '../../services/utils';
 import {QueryGetCommentsArgs} from '../../generated/types';
 
 export const commentQueries = {
-    getComments: async (_parent: unknown, args: QueryGetCommentsArgs, ctx: object): Promise<object> => {
+    getComments: async (_parent: unknown, args: QueryGetCommentsArgs, ctx: object): Promise<CommentModel[]> => {
         rejectUnauthorized(ctx as Context);
 
         let {limit} = args;

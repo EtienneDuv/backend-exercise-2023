@@ -1,7 +1,10 @@
 import {UserModel} from '../../database/models';
 import {Context} from '../../interfaces';
-import {QueryGetUsersArgs} from '../../generated/types';
 import {rejectUnauthorized} from '../../services/utils';
+import {
+    QueryGetUsersArgs,
+    QueryGetUserArgs
+} from '../../generated/types';
 
 export const userQueries = {
     getUsers: (_parent: unknown, args: QueryGetUsersArgs, ctx: object): Promise<UserModel[]> => {
@@ -14,5 +17,13 @@ export const userQueries = {
             limit,
             attributes: ['id', 'username', 'createdAt']
         });
-    }
+    },
+    getUser: (_parent: unknown, args: QueryGetUserArgs, ctx: object): Promise<object> => {
+        rejectUnauthorized(ctx as Context);
+
+        return UserModel.findOneOrFail({
+            where     : {id: args.userId},
+            attributes: ['id', 'username', 'createdAt']
+        });
+    },
 };

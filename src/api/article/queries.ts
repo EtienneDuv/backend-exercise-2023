@@ -1,7 +1,10 @@
 import {ArticleModel} from '../../database/models';
 import {Context} from '../../interfaces';
 import {rejectUnauthorized} from '../../services/utils';
-import {QueryGetArticlesArgs} from '../../generated/types';
+import {
+    QueryGetArticlesArgs,
+    QueryGetArticleArgs
+} from '../../generated/types';
 
 export const articleQueries = {
     getArticles: async (_parent: unknown, args: QueryGetArticlesArgs, ctx: object): Promise<ArticleModel[]> => {
@@ -12,6 +15,13 @@ export const articleQueries = {
 
         return ArticleModel.findAll({
             limit
+        });
+    },
+    getArticle: async (_parent: unknown, args: QueryGetArticleArgs, ctx: object): Promise<object> => {
+        rejectUnauthorized(ctx as Context);
+
+        return ArticleModel.findOneOrFail({
+            where: {id: args.articleId}
         });
     },
 };

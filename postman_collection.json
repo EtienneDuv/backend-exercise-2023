@@ -14,8 +14,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -43,8 +41,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -82,8 +78,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -91,7 +85,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query {\r\n    getUsers {\r\n        username\r\n        id\r\n        comments {\r\n            content\r\n            score\r\n            children {\r\n                content\r\n                score\r\n            }\r\n        }\r\n    }\r\n}",
+								"query": "query {\r\n    getUsers {\r\n        username\r\n        id\r\n        comments (topLevelOnly: true) {\r\n            id\r\n            content\r\n            score\r\n            children {\r\n                id\r\n            }\r\n        }\r\n    }\r\n}",
 								"variables": ""
 							}
 						},
@@ -126,8 +120,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -165,8 +157,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -204,8 +194,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -243,8 +231,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -252,7 +238,44 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query {\r\n    getArticles (limit: 5) {\r\n        id\r\n        title\r\n        comments {\r\n            content\r\n            score\r\n            children {\r\n                content\r\n                children {\r\n                    content\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+								"query": "query {\r\n    getArticles (limit: 5) {\r\n        id\r\n        title\r\n        comments (topLevelOnly: true) {\r\n            content\r\n            score\r\n            children {\r\n                content\r\n                children {\r\n                    content\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:{{API_PORT}}",
+							"host": [
+								"localhost"
+							],
+							"port": "{{API_PORT}}"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetArticle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    getArticle (articleId: \"[article ID]\") {\r\n        title\r\n        perex\r\n        comments (topLevelOnly: true) {\r\n            id\r\n            content\r\n            score\r\n            children {\r\n                id\r\n                children {\r\n                    id\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
 								"variables": ""
 							}
 						},
@@ -287,8 +310,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -326,8 +347,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -358,8 +377,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -390,8 +407,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -440,8 +455,6 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "",
-								"value": "",
 								"type": "default",
 								"disabled": true
 							}
@@ -449,7 +462,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query {\r\n    getComments (limit: 10) {\r\n        content\r\n        score\r\n        children {\r\n            id\r\n            content\r\n            children {\r\n                id\r\n                content\r\n            }\r\n        }\r\n    }\r\n}",
+								"query": "query {\r\n    getComments (limit: 3) {\r\n        id\r\n        content\r\n        score\r\n        children {\r\n            id\r\n            children {\r\n                id\r\n            }\r\n        }\r\n    }\r\n}",
 								"variables": ""
 							}
 						},
@@ -489,7 +502,7 @@
 	"variable": [
 		{
 			"key": "JWT",
-			"value": "Put token from Login mutation here",
+			"value": "",
 			"type": "default"
 		},
 		{

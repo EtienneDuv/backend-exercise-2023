@@ -6,7 +6,7 @@ type User {
   password: String 
   createdAt: String! 
   articles: [Article!]!
-  comments: [Comment!]!
+  comments(topLevelOnly: Boolean): [Comment!]!
 }
 
 type Jwt {
@@ -15,6 +15,7 @@ type Jwt {
 
 type Query {
   getUsers(limit: Int): [User!]!
+  getUser(userId: ID!): User!
 }
 
 type Mutation {

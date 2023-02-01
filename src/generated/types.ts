@@ -29,6 +29,11 @@ export type Article = {
   updatedAt: Scalars['String'];
 };
 
+
+export type ArticleCommentsArgs = {
+  topLevelOnly?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type Comment = {
   __typename?: 'Comment';
   articleId: Scalars['ID'];
@@ -115,9 +120,16 @@ export type MutationUpdateArticleArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  getArticle: Article;
   getArticles: Array<Article>;
   getComments: Array<Comment>;
+  getUser: User;
   getUsers: Array<User>;
+};
+
+
+export type QueryGetArticleArgs = {
+  articleId: Scalars['ID'];
 };
 
 
@@ -128,6 +140,11 @@ export type QueryGetArticlesArgs = {
 
 export type QueryGetCommentsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetUserArgs = {
+  userId: Scalars['ID'];
 };
 
 
@@ -145,6 +162,11 @@ export type User = {
   /**  Hash of password  */
   password?: Maybe<Scalars['String']>;
   username: Scalars['String'];
+};
+
+
+export type UserCommentsArgs = {
+  topLevelOnly?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -244,7 +266,7 @@ export type ResolversParentTypes = {
 
 export type ArticleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Article'] = ResolversParentTypes['Article']> = {
   authorId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, Partial<ArticleCommentsArgs>>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -283,14 +305,16 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<QueryGetArticleArgs, 'articleId'>>;
   getArticles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType, Partial<QueryGetArticlesArgs>>;
   getComments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, Partial<QueryGetCommentsArgs>>;
+  getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, Partial<QueryGetUsersArgs>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   articles?: Resolver<Array<ResolversTypes['Article']>, ParentType, ContextType>;
-  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType, Partial<UserCommentsArgs>>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

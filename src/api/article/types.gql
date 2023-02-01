@@ -9,11 +9,12 @@ type Article {
   content: String!
   createdAt: String!
   updatedAt: String!
-  comments: [Comment!]!
+  comments(topLevelOnly: Boolean): [Comment!]!
 }
 
 type Query {
   getArticles(limit: Int): [Article!]!
+  getArticle(articleId: ID!): Article!
 }
 
 type Mutation {

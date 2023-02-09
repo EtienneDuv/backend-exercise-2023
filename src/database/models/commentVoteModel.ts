@@ -33,3 +33,4 @@ CommentVoteModel.init({
     timestamps     : false,
     underscored    : false,
 });
+CommentVoteModel.removeAttribute('id');

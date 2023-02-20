@@ -1,4 +1,4 @@
-import {ArticleModel, CommentModel, ChildCommentModel} from '../../database/models';
+import {ArticleModel, CommentModel, ChildCommentModel, UserModel} from '../../database/models';
 import {ArticleCommentsArgs} from '../../generated/types';
 import {LooseObject} from '../../interfaces';
 
@@ -29,5 +29,20 @@ export const articleResolvers = {
         }
 
         return CommentModel.findAll(query);
+    },
+    commentCount: async (parent: ArticleModel): Promise<number> => {
+        const query: LooseObject = {
+            where: {articleId: parent.id},
+        };
+
+        return CommentModel.count(query);
+    },
+    authorUsername: async (parent: ArticleModel): Promise<string> => {
+        const query: LooseObject = {
+            where: {id: parent.authorId},
+        };
+
+        const user = await UserModel.findOneOrFail(query) as UserModel;
+        return user.username;
     },
 };

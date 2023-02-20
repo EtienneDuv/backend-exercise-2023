@@ -7,6 +7,7 @@ import {
     CommentVoteModel,
     ChildCommentModel,
 } from '../../database/models';
+import {articleContentMarkdown} from './seed_content';
 
 const seed = async () => {
     // ----------------------------------
@@ -21,6 +22,10 @@ const seed = async () => {
             password: password
         });
     }
+    userPayloads.push({
+        username: 'cypress_account',
+        password: await hashPassword('cypress_password')
+    });
     const users = await UserModel.bulkCreate(userPayloads);
 
     console.log('Use one of those to login: ', {
@@ -41,7 +46,7 @@ const seed = async () => {
             authorId: faker.helpers.arrayElement(userIds),
             title   : faker.lorem.words(4),
             perex   : faker.lorem.sentence(),
-            content : faker.lorem.paragraphs(4),
+            content : articleContentMarkdown,
         });
     }
     const articles = await ArticleModel.bulkCreate(articlePayloads);

@@ -27,6 +27,9 @@ export const userMutations = {
 
         const token = jwtSign(user.id);
 
-        return {token};
+        return {
+            token,
+            userId: user.id
+        };
     }
 };

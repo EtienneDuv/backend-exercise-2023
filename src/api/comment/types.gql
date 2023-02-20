@@ -2,6 +2,7 @@ type Comment {
   id: ID!
   articleId: ID!
   authorId: ID!
+  authorUsername: String!
   content: String!
   createdAt: String!
   score: Int!

@@ -3,6 +3,7 @@ type Article {
   id: ID!
   """ UUID of author """
   authorId: ID!
+  authorUsername: String!
   title: String!
   """ Short brief of the content """
   perex: String!
@@ -10,6 +11,7 @@ type Article {
   createdAt: String!
   updatedAt: String!
   comments(topLevelOnly: Boolean): [Comment!]!
+  commentCount: Int!
 }
 
 type Query {

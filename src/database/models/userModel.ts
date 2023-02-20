@@ -30,9 +30,6 @@ UserModel.init({
     },
     createdAt: {
         type: DataTypes.DATE,
-        get () {
-            return new Date(this.getDataValue('createdAt')).toISOString();
-        }
     },
 }, {
     sequelize,

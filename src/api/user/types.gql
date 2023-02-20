@@ -10,6 +10,7 @@ type User {
 }
 
 type Jwt {
+  userId: ID!
   token: String!
 }
 

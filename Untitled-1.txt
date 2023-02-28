@@ -1,0 +1,41 @@
+Recommendations:
+
+
+- Take a look at NestJS and try writing an app or this exercise with it, it will help a lot with understanding of good practices even if you choose not to use it for your own projects. Try to understand how the application logic should be separated between presentation/service/database layers. It's not a good idea in general to import your database models into queries/mutations directly
+
+- Move to TypeORM or Prisma instead of Sequelize
+
+- Try to study on how to use decorators in TypeScript. Again get inspiration from Nestjs or type-graphql.
+
+- Definitely acquire a habit of writing unit tests for as large as possible amount of code and especially functional code as you can. You have something like e2e tests using request() which are good for testing end-2-end functionality, but unit tests are better to ensure that each part of the code works as intended and will also as a result make you write better code.
+
+- You should ideally use docker compose for dev environments too, which it seems you do, but then you ask people to run postgres using a docker run command for some reason?
+
+- You generally shouldn't mix several .env files and accomodate your code for that. Check the 12 factor app principles
+
+- There's a lot of issues with your code that could be written more "beautifully" if you used decorators and advanced typescript types (like Partial) and newer JS features (like map, filter etc).
+
+
+The Config file is a good example where an experienced dev can see more issues at first sight:
+1. You have confusing names Env and Config for the same things, except one has all values option - you could as well do type Env = Partial<Config> for that
+2. You have a function getSanitizedConfig which actually only checks for missing values and throws error if it founds any, but you just return the function as is. Why not just call it validateConfig and not return anything?
+3. You could use map and filter to check for missing values and build an array of errors so that you can show it to the dev/user all at once instead of expecting them to fix it one by one
+4. This file has a lot of code that's easily testable yet there are not tests for it.
+5. You can get rid of the path resolving for different .env files if you follow best practices.
+6. Also, this whole thing is a great example of how to write code with decorators and why they are better practice, since they would remove a lot of repeating of yourself (this is just an idea of out of my head, so don't expect it to work out of the box like this, and you'd have to actually implement these decorators yourself):
+
+@Config()
+export class Config {
+  @Env('APP_PORT')
+  @Required()
+  get port(): number {}
+
+  @Env('POSTGRES_LOGGING')
+  @Required()
+  get postgresLogging(): boolean {}
+  // ...
+}
+
+There are solutions of course that do something like this for you: https://www.npmjs.com/package/config-decorators
+
+7. It's good that you use hashing, but would be even better if you used salt for it

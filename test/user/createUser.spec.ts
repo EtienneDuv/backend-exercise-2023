@@ -40,7 +40,7 @@ export default () => {
 
         expect(data2.id).to.be.eql(data1.id);
         expect(data2.username).to.be.eql(data1.username);
-        expect(data2.createdAt).to.be.eql(data1.createdAt);
+        expect(String(new Date(data2.createdAt).getTime())).to.be.eql(data1.createdAt);
     });
 
 
